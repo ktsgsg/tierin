@@ -1,0 +1,28 @@
+services:
+  db:
+    image: mariadb:11.8
+    environment:
+      MARIADB_ROOT_PASSWORD: rootpass
+      MARIADB_DATABASE: tierindb
+      MARIADB_USER: user
+      MARIADB_PASSWORD: password
+    volumes:
+      - db-data:/var/lib/mysql
+  phpmyadmin:
+    image: phpmyadmin:5.2
+    depends_on:
+      - db
+    environment:
+      PMA_ARBITRARY: '1'
+      PMA_HOST: db
+      PMA_PORT: '3306'
+      PMA_USER: root
+      PMA_PASSWORD: rootpass
+    ports:
+      - "3006:80"
+    volumes:
+      - phpmyadmin-data:/sessions
+
+volumes:
+  db-data:
+  phpmyadmin-data:
