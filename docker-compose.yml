@@ -1,13 +1,22 @@
 services:
+  services:
   db:
-    image: mariadb:11.8
-    environment:
-      MARIADB_ROOT_PASSWORD: rootpass
-      MARIADB_DATABASE: tierindb
-      MARIADB_USER: user
-      MARIADB_PASSWORD: password
+    # We use a mariadb image which supports both amd64 & arm64 architecture
+    image: mariadb:10.5-focal
+    # image: mariadb:10.6.4-focal
+    # If you really want to use MySQL, uncomment the following line
+    # image: mysql:8.0.27
+    command: '--default-authentication-plugin=mysql_native_password'
     volumes:
       - db-data:/var/lib/mysql
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=rootpass
+      - MYSQL_DATABASE=tierindb
+      - MYSQL_USER=tierin
+      - MYSQL_PASSWORD=tinerinpass
+    ports:
+      - 3306:3306
   phpmyadmin:
     image: phpmyadmin:5.2
     depends_on:
@@ -19,9 +28,19 @@ services:
       PMA_USER: root
       PMA_PASSWORD: rootpass
     ports:
-      - "3006:80"
+      - "3002:80"
     volumes:
       - phpmyadmin-data:/sessions
+  nextapp:
+    build: 
+      context: ./tierin
+    ports:
+      - "3003:3000"
+    command: sh -c "npm start"
+    volumes:
+      - ./tierin:/tierin
+    depends_on:
+      - db
 
 volumes:
   db-data:
