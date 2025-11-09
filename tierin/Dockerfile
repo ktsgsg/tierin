@@ -1,4 +1,6 @@
-FROM node:24.11.0-alpine
+# ...existing code...
+FROM node:24-alpine AS builder
 WORKDIR /tierin
 COPY package*.json ./
-RUN npm install
+RUN npm ci
+COPY . .
