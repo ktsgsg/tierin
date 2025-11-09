@@ -1,5 +1,4 @@
 services:
-  services:
   db:
     # We use a mariadb image which supports both amd64 & arm64 architecture
     image: mariadb:10.5-focal
@@ -28,20 +27,23 @@ services:
       PMA_USER: root
       PMA_PASSWORD: rootpass
     ports:
-      - "3002:80"
+      - "3200:80"
     volumes:
       - phpmyadmin-data:/sessions
   nextapp:
     build: 
       context: ./tierin
     ports:
-      - "3003:3000"
-    command: sh -c "npm start"
+      - "3000:3000"
+    #ホットスワップを有効にするためのコマンド"npm run dev"、無効にするには"npm run build && npm start"に変更
+    command: sh -c "npm run build && npm start"
     volumes:
       - ./tierin:/tierin
+      - nextapp_node_modules:/tierin/node_modules
     depends_on:
       - db
 
 volumes:
   db-data:
-  phpmyadmin-data:
+  phpmyadmin-data: 
+  nextapp_node_modules:
