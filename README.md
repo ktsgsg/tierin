@@ -41,6 +41,3 @@ bind mount を使わずイメージ内のビルド成果物を使う場合（推
 
 ## トラブルシュート
 - "Could not find a production build in the '.next' directory" → イメージ内で `next build` が走っていない、またはホストの bind mount によってイメージ内の `.next` が上書きされている可能性があります。開発時は `npm run dev` を使うか、本番では bind mount を外してイメージ内でビルドしてください。
-- SSH / Git の認証エラーがある場合はローカルの SSH キーと ssh-agent を確認してください（`ssh-add -l` / `ssh -vT git@github.com`）。
-
-必要なら README をさらに詳しく編集します。
