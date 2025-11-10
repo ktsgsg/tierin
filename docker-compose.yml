@@ -14,8 +14,6 @@ services:
       - MYSQL_DATABASE=tierindb
       - MYSQL_USER=tierin
       - MYSQL_PASSWORD=tinerinpass
-    ports:
-      - 3306:3306
   phpmyadmin:
     image: phpmyadmin:5.2
     depends_on:
