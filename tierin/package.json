@@ -9,8 +9,8 @@
   "dependencies": {
     "@hono/node-server": "^1.19.6",
     "@supabase/supabase-js": "^2.81.1",
-    "hono": "^4.10.6",
-    "supabase": "^2.58.5"
+    "dotenv": "^17.2.3",
+    "hono": "^4.10.6"
   },
   "devDependencies": {
     "@types/node": "^20.11.17",

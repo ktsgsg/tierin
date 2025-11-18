@@ -1,5 +1,6 @@
 import {Hono} from 'hono'
-import type { FC } from 'hono/jsx'
+import { use, type FC } from 'hono/jsx'
+import {useSupabase} from '../hooks/supabase/useSupabase.js';
 
 export const about = new Hono()
 
@@ -49,5 +50,18 @@ about.get('/', (c) => {
 })
 
 about.get('/test', (c) => {
-  return c.text('This is the about page.')
+  const name = c.req.query('name') || 'Anonymous';
+  const supabase = useSupabase().supabase;
+
+  supabase
+    .from('test')
+    .insert({name: name }).then(({ data, error }) => {
+      if (error) {
+        console.error('Error inserting data:', error);
+      } else {
+        console.log('Data inserted successfully:', name);
+      }
+    })
+
+  return c.text('Add your name to the table')
 })
