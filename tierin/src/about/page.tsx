@@ -48,6 +48,6 @@ about.get('/', (c) => {
   return c.html(<Top messages={messages} />)
 })
 
-about.get('/info', (c) => {
+about.get('/test', (c) => {
   return c.text('This is the about page.')
-});
+})
