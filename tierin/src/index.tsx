@@ -3,11 +3,9 @@ import { Hono } from 'hono'
 import type {FC} from 'hono/jsx'
 import { serveStatic } from '@hono/node-server/serve-static'
 
-import {about} from './about/page.js';
+import {about} from './about/page.js'
 
-const app = new Hono();
-
-app.use('/static/*', serveStatic({ root: './static' }))//staticファイルを使うための設定これだとstaticフォルダ以下にアクセスできる
+const app = new Hono()
 
 app.get('/', (c) => {
   console.log("Root page accessed");
@@ -19,10 +17,11 @@ app.get('/', (c) => {
         <a href="/about">About Tierin</a>
       </body>
     </html>
-  );
-});
+  )
+})
+app.route('/about', about)
 
-app.route('/about', about);
+app.use('/static/*', serveStatic({ root: './' }))//staticファイルを使うための設定これだとstaticフォルダ以下にアクセスできる
 
 serve({
   fetch: app.fetch,
