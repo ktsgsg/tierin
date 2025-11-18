@@ -1,43 +1,67 @@
-# tierin — 起動手順
+**起動方法 (Node - ローカル実行)**
 
-## 前提
-- Docker と Docker Compose プラグイン（`docker compose`）がインストールされていること
-- リポジトリルートで操作すること（この README の場所）
+現在は `docker compose` を使わない方針とのことなので、ローカルの `node` で起動する手順をここに記載します。
 
-## 使い方（簡単）
-1. イメージをビルドしてコンテナをバックグラウンドで起動（本番風）
-   ```
-   docker compose up -d --build
-   ```
+作業はプロジェクト内の `tierin` ディレクトリで行ってください（このリポジトリは `tierin/tierin` にフロントエンド実装が入っています）。
 
-2. 停止・削除
-   ```
-   docker compose down
-   ```
+前提
+- Node.js >= 18 を推奨
+- npm が使用可能（Node に同梱）
 
-## 開発モード（ホットリロード）
-ソースをホストからコンテナへマウントしているため、ローカル編集で即反映させたい場合は dev サーバーを使います。
+セットアップ
+
+```bash
+cd tierin
+npm install
 ```
-# サービスに対して開発コマンドを一時実行（ホットリロード）
-docker compose run --service-ports --rm nextapp sh -c "npm run dev"
+
+環境変数
+- ルートの `tierin` ディレクトリ内に `.env` を用意してください。`src/hooks/supabase/useSupabase.ts` が以下の環境変数を参照します:
+
 ```
-または compose 定義を一時的に書き換えて `command: npm run dev` にして `docker compose up --build` しても可。
+SUPABASE_URL=https://your-project.supabase.co
+SUPABASE_ANON_KEY=your-anon-key
+```
 
-## 本番風起動（.next をイメージ内でビルドして起動）
-bind mount を使わずイメージ内のビルド成果物を使う場合（推奨: 本番運用）
-1. docker compose の `nextapp` でボリューム（./tierin:/tierin）を外す
-2. ビルド・起動:
-   ```
-   docker compose build nextapp
-   docker compose up -d nextapp
-   ```
+開発モード（ホットリロード）
 
-## よく使うコマンド
-- ログを追う: `docker compose logs -f`
-- 特定サービスのログ: `docker compose logs -f nextapp`
-- コンテナに入る: `docker compose exec nextapp sh`
-- ビルドのみ: `docker compose build`
-- イメージ再ビルド（キャッシュ無視）: `docker compose build --no-cache`
+```bash
+npm run dev
+```
 
-## トラブルシュート
-- "Could not find a production build in the '.next' directory" → イメージ内で `next build` が走っていない、またはホストの bind mount によってイメージ内の `.next` が上書きされている可能性があります。開発時は `npm run dev` を使うか、本番では bind mount を外してイメージ内でビルドしてください。
+- `npm run dev` は `tsx watch src/index.tsx` を実行します。起動後、`http://localhost:3000` を開いて確認してください。
+
+本番（簡易）
+
+```bash
+npm run build
+npm run start
+```
+
+- `npm run build` は `tsc` を実行し、`dist/index.js` を生成します。`npm run start` は `node dist/index.js` を実行します。
+
+よくあるトラブル
+- `.env` のキーが不足していると起動時にエラーになります。`SUPABASE_URL` と `SUPABASE_ANON_KEY` を確認してください。
+- `npm run dev` が動作しない場合は `node` と `npm` のバージョン、`tsx` がインストールされているか確認してください。
+
+補足
+- 既存の `docker-compose.yml` や `init.sql` を使った起動はここでは触れていません。将来的に Docker で一貫した環境を作る場合は別途手順を追加できます。
+
+クイックコマンドまとめ
+
+```bash
+cd tierin
+npm install
+# .env を作る（例）
+cat > .env <<'EOF'
+SUPABASE_URL=https://your-project.supabase.co
+SUPABASE_ANON_KEY=your-anon-key
+EOF
+
+# 開発
+npm run dev
+
+# 本番ビルド + 起動
+npm run build
+npm run start
+```
