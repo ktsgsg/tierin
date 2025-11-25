@@ -19,6 +19,12 @@ app.get('/', (c) => {
     </html>
   )
 })
+
+app.get('api/posting/', (c) => {
+  console.log("Posting API accessed");
+  return c.text("Posting successful")
+})
+
 app.route('/about', about)
 
 app.use('/static/*', serveStatic({ root: './' }))//staticファイルを使うための設定これだとstaticフォルダ以下にアクセスできる
