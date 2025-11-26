@@ -28,5 +28,5 @@ lerna-debug.log*
 .DS_Store
 
 #storage
-backend/storage/meta/*.json
-backend/storage/contents/*
+storage/meta/*.json
+storage/resource/*
