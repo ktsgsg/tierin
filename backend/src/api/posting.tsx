@@ -41,8 +41,8 @@ posting.post('/', async(c) => {
       'year': formData.get("year"), // 年度
       'posting_time': new Date().toISOString(), // 投稿時間 現在時刻
       'contents_type': formData.get("contents_type"), // このコンテンツの種類
+      'extensions': contentExtensions, // アップロードされたファイルの拡張子リスト
       'resources': resources // アップロードされたファイルの情報
-      
    }
 
    //contentをDBに保存する
@@ -56,6 +56,7 @@ posting.post('/', async(c) => {
          'subject_code': contents.subject_code,
          'year': contents.year as string,
          'contents_id': contents.contents_id,
+         'extensions': contents.extensions.toString(),
          'contents_type': contents.contents_type as string,
       });
    if (error) {
