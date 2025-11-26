@@ -89,10 +89,10 @@ posting.get('/', (c) => {
                <input type="radio" name="contents_type" value="other"/>その他
             </p>
             <div>とりあえず4つ送れるようにした，フロントエンド側で操作してもっとたくさんのファイルを送れるようにする</div>
-            <input type="file" id= "file" name="file" accept='video/mp4 image/png image/jpeg audio/mpeg pdf'/><br/>
-            <input type="file" id= "file" name="file" accept='video/mp4 image/png image/jpeg audio/mpeg pdf'/><br/>
-            <input type="file" id= "file" name="file" accept='video/mp4 image/png image/jpeg audio/mpeg pdf'/><br/>
-            <input type="file" id= "file" name="file" accept='video/mp4 image/png image/jpeg audio/mpeg pdf'/><br/>
+            <input type="file" id= "file" name="file" accept='video/mp4 image/png image/jpeg application/pdf'/><br/>
+            <input type="file" id= "file" name="file" accept='video/mp4 image/png image/jpeg application/pdf'/><br/>
+            <input type="file" id= "file" name="file" accept='video/mp4 image/png image/jpeg application/pdf'/><br/>
+            <input type="file" id= "file" name="file" accept='video/mp4 image/png image/jpeg application/pdf'/><br/>
             <input type="submit" value="Search" /><br/>
          </form>
       </body>
