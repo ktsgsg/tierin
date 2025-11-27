@@ -1,15 +1,15 @@
 import { serve } from '@hono/node-server'
 import { Hono } from 'hono'
-import type {FC} from 'hono/jsx'
-import { serveStatic } from '@hono/node-server/serve-static'
+import { logger } from 'hono/logger'
 
 import {about} from './about/page.js'
 import { posting } from './api/posting.js'
 
-const app = new Hono()
+const app = new Hono();
+
+app.use(logger());
 
 app.get('/', (c) => {
-  console.log("Root page accessed");
   return c.html(
     <html>
       <body>
