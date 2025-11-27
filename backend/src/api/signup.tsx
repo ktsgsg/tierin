@@ -8,6 +8,11 @@ signup.post('/', async (c) => {
    const email = json.email.toString();
    const password = json.password.toString();
 
+   //特定のメールアドレスのみ許可する(ドメインがccmailg.meijo-u.ac.jpの場合のみ)
+   if (!email.endsWith('@ccmailg.meijo-u.ac.jp')) {
+      return c.json({ error: 'Only Meijo University email addresses are allowed.' }, 400);
+   }
+
    if (!email || !password) {
       return c.json({ error: 'Email and password are required.' }, 400);
    }
