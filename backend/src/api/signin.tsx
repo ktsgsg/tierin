@@ -1,7 +1,9 @@
 import { Hono } from 'hono';
 import {useSupabase} from '../hooks/supabase/useSupabase.js';
+import { getCookie, setCookie } from 'hono/cookie'
 
 export const signin = new Hono();
+
 
 signin.post('/', async (c) => {
    const json = await c.req.parseBody();
@@ -21,6 +23,11 @@ signin.post('/', async (c) => {
    if (error) {
       return c.json({ error: error.message }, 400);
    }
+   // セッション情報をクッキーに保存
+   setCookie(c,'auth_token', data.session?.access_token || '',{
+      httpOnly: true,
+   });
+
    return c.json(data.session);
 });
 
