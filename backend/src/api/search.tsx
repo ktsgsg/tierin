@@ -4,7 +4,7 @@ import { useSupabase } from '../hooks/supabase/useSupabase.js'
 
 export const search = new Hono()
 
-search.get('/', async (c) => {
+search.get('/search', async (c) => {
   console.log('Search page accessed')
 
   try {
