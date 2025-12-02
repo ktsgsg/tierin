@@ -51,7 +51,7 @@ search.get('/', async (c) => {
     let contentsQuery: any = supabase.from('contents').select('*').order('posting_time', { ascending: false })
     if (titleParam) contentsQuery = contentsQuery.ilike('title', `%${titleParam}%`)
     if (yearParam) contentsQuery = contentsQuery.eq('year', yearParam)
-    if (typeParam) contentsQuery = contentsQuery.ilike('contents_type', `%${typeParam}%`)
+    if (typeParam) contentsQuery = contentsQuery.eq('contents_type', typeParam)
     if (subject_codes && subject_codes.length > 0) contentsQuery = contentsQuery.in('subject_code', subject_codes)
 
     const { data, error } = await contentsQuery
