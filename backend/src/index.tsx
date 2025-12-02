@@ -4,7 +4,7 @@ import type {FC} from 'hono/jsx'
 import { serveStatic } from '@hono/node-server/serve-static'
 
 import {about} from './about/page.js'
-import {search} from './search/search.js'
+import {search} from './api/search.js'
 
 const app = new Hono()
 
@@ -27,7 +27,7 @@ app.get('api/posting/', (c) => {
 })
 
 app.route('/about', about)
-app.route('/search', search)
+app.route('/api/search', search)
 
 app.use('/static/*', serveStatic({ root: './' }))//staticファイルを使うための設定これだとstaticフォルダ以下にアクセスできる
 
