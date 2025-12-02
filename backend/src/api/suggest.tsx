@@ -21,7 +21,15 @@ suggest.get('/subject', async (c) => {
       }
    }
 
-   const { data, error } = await supabase.from('subjects').select(select).like('code', `%${code}%`).like('name', `%${name}%`).like('teachers', `%${teachers}%`);
+   const { data, error } = await supabase
+      .from('subjects')
+      .select(select)
+      .like('code', `%${code}%`)
+      .like('name', `%${name}%`)
+      .like('teachers', `%${teachers}%`);
+
+
+
    if (error) {
       return c.json({ error: error.message }, 500);
    }
