@@ -2,7 +2,8 @@ import { serve } from '@hono/node-server'
 import { Hono } from 'hono'
 import { logger } from 'hono/logger'
 
-import { about } from './about/page.js'
+import {about} from './about/page.js'
+import {search} from './api/search.js'
 import { posting } from './api/posting.js'
 import { suggest } from './api/suggest.js'
 
@@ -23,6 +24,7 @@ app.get('/', (c) => {
 })
 
 app.route('/about', about)
+app.route('/api/search', search)
 app.route('/api/posting/', posting)
 app.route('/api/database/', suggest)
 
