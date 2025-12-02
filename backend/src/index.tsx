@@ -1,15 +1,17 @@
 import { serve } from '@hono/node-server'
 import { Hono } from 'hono'
-import type {FC} from 'hono/jsx'
-import { serveStatic } from '@hono/node-server/serve-static'
+import { logger } from 'hono/logger'
 
 import {about} from './about/page.js'
 import {search} from './api/search.js'
+import { posting } from './api/posting.js'
+import { suggest } from './api/suggest.js'
 
-const app = new Hono()
+const app = new Hono();
+
+app.use(logger());
 
 app.get('/', (c) => {
-  console.log("Root page accessed");
   return c.html(
     <html>
       <body>
@@ -21,15 +23,11 @@ app.get('/', (c) => {
   )
 })
 
-app.get('api/posting/', (c) => {
-  console.log("Posting API accessed");
-  return c.text("Posting successful")
-})
-
 app.route('/about', about)
 app.route('/api/search', search)
+app.route('/api/posting/', posting)
+app.route('/api/database/', suggest)
 
-app.use('/static/*', serveStatic({ root: './' }))//staticファイルを使うための設定これだとstaticフォルダ以下にアクセスできる
 
 serve({
   fetch: app.fetch,
