@@ -14,6 +14,6 @@ services:
     ports:
       - 8080:3000
     command: >
-      bash -c "npm install"
+      bash -c "npm install && npx next dev"
     volumes:
       - ./frontend/tierin:/home/app
