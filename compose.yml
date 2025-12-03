@@ -1,0 +1,9 @@
+services:
+  api:
+    build: ./backend
+    ports:
+      - 3000:3000
+    environment:
+      - PORT=3000
+    command: >
+      bash -c "npm install && npm run dev"
