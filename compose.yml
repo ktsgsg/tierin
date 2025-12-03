@@ -1,0 +1,19 @@
+services:
+  api:
+    build: ./backend
+    ports:
+      - 3000:3000
+    environment:
+      - PORT=3000
+    command: >
+      bash -c "npm install && npm run dev"
+    volumes:
+      - ./backend:/home/app
+  frontend:
+    build: ./frontend/tierin
+    ports:
+      - 8080:3000
+    command: >
+      bash -c "npm install && npx next dev"
+    volumes:
+      - ./frontend/tierin:/home/app
