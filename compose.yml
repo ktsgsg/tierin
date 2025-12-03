@@ -7,3 +7,13 @@ services:
       - PORT=3000
     command: >
       bash -c "npm install && npm run dev"
+    volumes:
+      - ./backend:/home/app
+  frontend:
+    build: ./frontend/tierin
+    ports:
+      - 8080:3000
+    command: >
+      bash -c "npm install"
+    volumes:
+      - ./frontend/tierin:/home/app
