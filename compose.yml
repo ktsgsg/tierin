@@ -11,19 +11,20 @@ services:
       app-network:
         ipv4_address: 172.30.0.2 # 固定IPを割り振る
     volumes:
-      - ./backend:/home/app
+      - ./backend:/app
 
   frontend:
     build: ./frontend/tierin
     ports:
       - 8080:3000
-    command: >
-      bash -c "npm install && npx next dev"
+    environment:
+      - WATCHPACK_POLLING=true
+    command: sh -c "npm install &&npm run dev"
     networks:
       app-network:
         ipv4_address: 172.30.0.3 # コンテナのIPアドレスを固定
     volumes:
-      - ./frontend/tierin:/home/app
+      - ./frontend/tierin:/app
 
 networks:
   app-network:
