@@ -2,10 +2,11 @@ import { serve } from '@hono/node-server'
 import { Hono } from 'hono'
 import { logger } from 'hono/logger'
 
-import {about} from './about/page.js'
-import {search} from './api/search.js'
+import { about } from './about/page.js'
+import { search } from './api/search.js'
 import { posting } from './api/posting.js'
 import { suggest } from './api/suggest.js'
+import { preview } from './api/preview.js'
 
 const app = new Hono();
 
@@ -21,13 +22,13 @@ app.get('/', (c) => {
       </body>
     </html>
   )
-})
+});
 
 app.route('/about', about)
 app.route('/api/search', search)
 app.route('/api/posting/', posting)
 app.route('/api/database/', suggest)
-
+app.route('/api/preview/', preview);
 
 serve({
   fetch: app.fetch,
