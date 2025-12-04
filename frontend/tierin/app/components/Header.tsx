@@ -1,31 +1,58 @@
-'use client';
+import Link from 'next/link';
+// CSS Modulesをインポート
+import styles from './Header.module.css';
 
-import React from "react";
-import Link from "next/link";
-import styles from "./Header.module.css";
+interface NavItem {
+    name: string;
+    href: string;
+}
+
+const navItems: NavItem[] = [
+    { name: 'ホーム', href: '/' },
+    { name: '詳細検索', href: '/search' },
+    { name: '投稿', href: '/post' },
+    { name: 'FAQ', href: '/faq' },
+];
 
 type HeaderProps = {
     user_id: string;
-}
+};
 
-const Header = ({user_id}: HeaderProps) => {
+export const Header = ({user_id}: HeaderProps) => {
     return (
-        <header className={styles.header}>
-            <nav>
-                <h1 className={styles.title}>Tierin</h1>
-                <p className={styles.userId}>{user_id}ログイン中</p>
-            </nav>
-            <nav className={styles.menuArea}>
-                <Link href="/" className={styles.menuBox}>ホーム</Link>
-                <Link href="/serach" className={styles.menuBox}>詳細検索</Link>
-                <Link href="/post" className={styles.menuBox}>投稿</Link>
-                <Link href="faq" className={styles.menuBox}>FAQ</Link>
+        // ナビゲーションバー全体にクラスを適用
+        <header className={styles.headerContainer}>
+            <div className={styles.navItem}>
+                <div className={styles.logoArea}>
+                    <div className={styles.logo}>
+                        🔗 Tierin
+                    </div>
+                    <div className={styles.user_id}>
+                        {user_id} ログイン中
+                    </div>
+                </div>
+            </div>
+
+
+            {navItems.map((item) => (
+                <Link
+                    key={item.name}
+                    href={item.href}
+                    className={`${styles.navItem} ${styles.linkItem}`}
+                >
+                    {item.name}
+                </Link>
+            ))}
+
+            <div className={`${styles.navItem} ${styles.searchBar}`}>
+                <span className={styles.searchIcon}>🔍</span>
                 <input
-                    className={styles.searchBox}
-                    placeholder="タグ，またはキーワードを入力"
+                    type="text"
+                    placeholder="タグ、またはキーワードを入力"
+                    className={styles.searchInput}
                 />
-            </nav>
+            </div>
         </header>
-    )
-}
+    );
+};
 export default Header;

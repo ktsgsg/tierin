@@ -1,36 +1,72 @@
-.header {
-    background-color: #f5f5f5;
-    padding: 1rem;
-    border-bottom: 1px solid #ddd;
+.headerContainer {
     display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    justify-content: space-between;
-    align-items: center;
+    justify-content: center;
+    margin: 20px 0;
 }
 
-.header p {
+/* ナビゲーションバー */
+.navItem {
+    padding: 10px 20px;
+    border: 1px solid #000000;
+    border-left: none;
+    display: flex;
+    align-items: center; /* 垂直方向の中央揃え */
+    font-weight: bold;
+    color: black;
+    white-space: nowrap; /* テキストが折り返さないように */
+}
+
+/* 最初のナビゲーション項目の左側の境界線を表示 */
+.navItem:first-child {
+    border-left: 1px solid #000000;
+}
+
+.logoArea {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.logo {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.user_id {
     font-size: 0.7rem;
+    font-weight: normal;
 }
 
-.title {
-    margin: 0;
-    font-size: 1.5rem;
-}
-
-.navList {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    gap: 1rem;
-}
-
-.navLink {
-    color: #0066cc;
+/* リンクアイテム（ホーム、検索など） */
+.linkItem {
+    background-color: #B3E0F2;
     text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* 色変化を滑らかに */
 }
 
-.navLink:hover {
-    text-decoration: underline;
+/* ホバー時の色変更 */
+.linkItem:hover {
+    background-color: #8FD8F4; /* ホバー時の色 */
+}
+
+/* 検索窓 */
+.searchBar {
+    background-color: #B3E0F2;
+}
+
+.searchIcon {
+    margin-right: 5px;
+}
+
+/* 検索入力欄 */
+.searchInput {
+    border: none;
+    background: transparent;
+    outline: none; /* フォーカス時の枠線を消す */
+    font-size: 1em;
+    padding: 0;
+    /* 入力欄の幅 */
+    width: 230px; 
 }
