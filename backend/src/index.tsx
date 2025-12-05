@@ -58,10 +58,10 @@ app.get('/', (c) => {
   )
 })
 
+app.route('/about/', about);
 app.route('/api/search', search)
 app.route('/api/posting/', posting)
 app.route('/api/database/', suggest)
-app.route('/about/', about);
 app.route('/api/signup/', signup);
 app.route('/api/signin/', signin);
 app.route('/api/getsession/', getsession);
