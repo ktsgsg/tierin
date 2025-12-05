@@ -37,7 +37,8 @@ export default function PostingTestPage() {
     files.forEach((f) => form.append("file", f));
 
     try {
-      const res = await fetch("/api/posting/", { method: "POST", body: form });
+      const res = await fetch("http://localhost:3000/api/posting/", { method: "POST", body: form });
+      console.log(res);
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       setStatusMsg("アップロード成功");
     } catch (err) {
@@ -55,7 +56,7 @@ export default function PostingTestPage() {
 
         <form
           method="post"
-          action="/api/posting/"
+          action="/posting"
           encType="multipart/form-data"
           onSubmit={handleSubmit}
           className="space-y-6"
@@ -164,7 +165,7 @@ export default function PostingTestPage() {
           </div>
 
           <div className="flex items-center justify-between">
-            <button type="submit" className="rounded-md bg-black px-4 py-2 text-sm text-white hover:opacity-95">アップロード</button>
+            <button type="submit" className="rounded-md bg-black px-4 py-2 text-sm text-white hover:opacity-95">投稿</button>
             <div className="text-sm text-zinc-600 dark:text-zinc-400">{statusMsg ?? ''}</div>
           </div>
         </form>
