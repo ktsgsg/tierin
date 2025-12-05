@@ -36,8 +36,7 @@ const Top: FC<{ messages: string[] }> = (props: {
       <footer>
         <p>まずは検索をお試しください。アカウントを作成すると投稿やお気に入り管理ができます。</p>
         <div>
-          <a href="/search" style={{ margin: 20 }}>過去問を検索</a>
-          <a href="/signup" style={{ margin: 20 }}>アカウント作成</a>
+          <a href="/api/signup/" style={{ margin: 20 }}>アカウント作成</a>
         </div>
       </footer>
     </Layout>
