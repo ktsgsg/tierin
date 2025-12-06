@@ -22,12 +22,13 @@ type SupabaseEnv = {
 export const supabaseMiddleware = (): MiddlewareHandler => {
    return async (c, next) => {
       const supabaseEnv = env<SupabaseEnv>(c)
-      const supabaseUrl = 'https://aitkvlfbvbimtkqtfmhn.supabase.co'
-      const supabaseAnonKey = 'sb_publishable_TmrfNwe4sl7sfWCIPPPFHA_forjBcci'
+      const supabaseUrl = supabaseEnv.SUPABASE_URL
+      const supabaseAnonKey = supabaseEnv.SUPABASE_PUBLISHABLE_KEY
 
       if (!supabaseUrl) {
          throw new Error('SUPABASE_URL missing!')
       }
+
       if (!supabaseAnonKey) {
          throw new Error('SUPABASE_PUBLISHABLE_KEY missing!')
       }
@@ -42,7 +43,6 @@ export const supabaseMiddleware = (): MiddlewareHandler => {
             },
          },
       })
-
       c.set('supabase', supabase)
       await next()
    }

@@ -1,5 +1,5 @@
 import { Hono } from 'hono';
-import {useSupabase} from '../hooks/supabase/useSupabase.js';
+import { useSupabase } from '../hooks/supabase/useSupabase.js';
 import { getCookie, setCookie } from 'hono/cookie'
 
 export const signin = new Hono();
@@ -9,25 +9,20 @@ signin.post('/', async (c) => {
    const json = await c.req.parseBody();
    const email = json.email.toString();
    const password = json.password.toString();
-   console.log(email,password);
+   console.log(email, password);
    if (!email || !password) {
       return c.json({ error: 'Email and password are required.' }, 400);
    }
-   const supabase = useSupabase().supabase;
+   const supabase = c.get('supabase');
 
-   const {data,error} = await supabase.auth.signInWithPassword({
+   const { data, error } = await supabase.auth.signInWithPassword({
       email: email,
       password: password,
    })
-   
+
    if (error) {
       return c.json({ error: error.message }, 400);
    }
-   // セッション情報をクッキーに保存
-   setCookie(c,'auth_token', data.session?.access_token || '',{
-      httpOnly: true,
-   });
-
    return c.json(data.session);
 });
 

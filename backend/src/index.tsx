@@ -15,10 +15,10 @@ import { useSupabase } from './hooks/supabase/useSupabase.js';
 import { supabaseMiddleware } from './middleware/auth.middleware.js';
 
 const app = new Hono();
+
 app.use(logger());
+
 //ログインしているかどうかを判断するミドルウェア
-
-
 app.use('/api/*', supabaseMiddleware());
 
 app.get('/', (c) => {
@@ -45,9 +45,9 @@ app.get('/', (c) => {
 })
 
 app.route('/about/', about);
-app.route('/api/search', search)
-app.route('/api/posting/', posting)
-app.route('/api/database/', suggest)
+app.route('/api/search', search);
+app.route('/api/posting/', posting);
+app.route('/api/database/', suggest);
 app.route('/api/signup/', signup);
 app.route('/api/signin/', signin);
 app.route('/api/getsession/', getsession);
