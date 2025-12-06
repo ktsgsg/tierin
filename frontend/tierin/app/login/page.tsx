@@ -37,18 +37,16 @@ export default function LoginPage() {
    };
 
    return (
-      <div className="min-h-screen flex items-center justify-center bg-[#071428]">
+      <div className="auth-page">
          {/* ログインフォームコンテナ */}
-         <div className="bg-[#0b1220] p-8 rounded-lg shadow-lg w-full max-w-md">
-            <h1 className="text-2xl font-bold text-white mb-6 text-center">
-               ログイン
-            </h1>
+         <div className="auth-card">
+            <h1 className="auth-title">ログイン</h1>
 
             {/* Server Actionを使用したフォーム */}
-            <form action={handleSubmit} className="space-y-4">
+            <form action={handleSubmit} className="auth-form">
                {/* メールアドレス入力欄 */}
                <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
+                  <label htmlFor="email" className="auth-label">
                      メールアドレス
                   </label>
                   <input
@@ -56,14 +54,14 @@ export default function LoginPage() {
                      id="email"
                      name="email"
                      required
-                     className="w-full px-3 py-2 bg-[#071428] border border-gray-600 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                     className="auth-input"
                      placeholder="example@example.com"
                   />
                </div>
 
                {/* パスワード入力欄 */}
                <div>
-                  <label htmlFor="password" className="block text-sm font-medium text-gray-300 mb-2">
+                  <label htmlFor="password" className="auth-label">
                      パスワード
                   </label>
                   <input
@@ -71,49 +69,37 @@ export default function LoginPage() {
                      id="password"
                      name="password"
                      required
-                     className="w-full px-3 py-2 bg-[#071428] border border-gray-600 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                     className="auth-input"
                      placeholder="パスワードを入力"
                   />
                </div>
 
                {/* エラーメッセージ表示 */}
-               {error && (
-                  <div className="text-red-400 text-sm p-3 bg-red-900/20 rounded-md">
-                     {error}
-                  </div>
-               )}
+               {error && <div className="auth-error">{error}</div>}
 
                {/* ログインボタン */}
-               <button
-                  type="submit"
-                  disabled={isLoading}
-                  className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-gray-600 text-white font-medium py-2 px-4 rounded-md transition-colors"
-               >
+               <button type="submit" disabled={isLoading} className="auth-button">
                   {isLoading ? 'ログイン中...' : 'ログイン'}
                </button>
             </form>
 
             {/* 新規登録リンク */}
-            <div className="mt-4 text-center">
-               <p className="text-gray-400 text-sm">
-                  アカウントをお持ちでない方は{' '}
-                  <Link href="/signup" className="text-blue-500 hover:text-blue-400 underline">
-                     新規登録
-                  </Link>
-               </p>
-            </div>
+            <p className="auth-subtext">
+               アカウントをお持ちでない方は{' '}
+               <Link href="/signup" className="auth-link">
+                  新規登録
+               </Link>
+            </p>
 
             {/* パスワード忘却時の案内 */}
-            <div className="mt-6 p-4 bg-blue-900/20 border border-blue-700 rounded-md">
-               <p className="text-blue-300 text-sm">
-                  現在、パスワードリセット機能はまだ実装されておりません。申し訳ございません。
-                  <br className="block my-2" />
-                  パスワードを忘れてしまった場合は、
-                  <a href="mailto:241205181@ccmailg.meijo-u.ac.jp" className="text-blue-400 hover:text-blue-300 underline">
-                     241205181@ccmailg.meijo-u.ac.jp
-                  </a>
-                  にご連絡の上、アカウントのリセットをお願いしてください。
-               </p>
+            <div className="auth-note">
+               現在、パスワードリセット機能はまだ実装されておりません。申し訳ございません。
+               <br />
+               パスワードを忘れてしまった場合は、
+               <a href="mailto:241205181@ccmailg.meijo-u.ac.jp" className="auth-link">
+                  241205181@ccmailg.meijo-u.ac.jp
+               </a>
+               にご連絡の上、アカウントのリセットをお願いしてください。
             </div>
          </div>
       </div>
