@@ -20,8 +20,8 @@
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background: #f5f8ff;
+  color: #0f172a;
   font-family: Arial, Helvetica, sans-serif;
 }
 
@@ -31,21 +31,22 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #071428;
+  background: linear-gradient(135deg, #e8f2ff 0%, #f5f8ff 100%);
   padding: 24px;
 }
 
 .auth-card {
   width: 100%;
-  max-width: 480px;
-  background: #0b1220;
-  padding: 32px;
-  border-radius: 12px;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
+  max-width: 960px;
+  background: #ffffff;
+  padding: 28px;
+  border-radius: 8px;
+  box-shadow: 0 20px 50px rgba(59, 130, 246, 0.12);
+  border: 1px solid #e2e8f0;
 }
 
 .auth-title {
-  color: #ffffff;
+  color: #0f172a;
   font-size: 1.5rem;
   font-weight: 700;
   text-align: center;
@@ -58,10 +59,15 @@ body {
   gap: 16px;
 }
 
+/* Compact spacing for search page */
+.auth-form.search-compact {
+  gap: 12px;
+}
+
 .auth-label {
   display: block;
   margin-bottom: 8px;
-  color: #cbd5e1;
+  color: #1f2937;
   font-size: 0.9rem;
   font-weight: 500;
 }
@@ -69,25 +75,27 @@ body {
 .auth-input {
   width: 100%;
   padding: 10px 12px;
-  background: #071428;
-  border: 1px solid #475569;
-  border-radius: 8px;
-  color: #ffffff;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  color: #0f172a;
   outline: none;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
 }
 
 .auth-input:focus {
   border-color: #3b82f6;
   box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.25);
+  background: #f0f7ff;
 }
 
 .auth-error {
-  color: #fca5a5;
-  background: rgba(127, 29, 29, 0.3);
+  color: #b91c1c;
+  background: #fee2e2;
   padding: 10px 12px;
   border-radius: 8px;
   font-size: 0.9rem;
+  border: 1px solid #fecdd3;
 }
 
 .auth-button {
@@ -95,7 +103,7 @@ body {
   padding: 10px 12px;
   border-radius: 8px;
   border: none;
-  background: #2563eb;
+  background: #3b82f6;
   color: #ffffff;
   font-weight: 600;
   cursor: pointer;
@@ -103,11 +111,11 @@ body {
 }
 
 .auth-button:hover:not(:disabled) {
-  background: #1d4ed8;
+  background: #2563eb;
 }
 
 .auth-button:disabled {
-  background: #475569;
+  background: #cbd5e1;
   cursor: not-allowed;
   opacity: 0.8;
 }
@@ -115,26 +123,115 @@ body {
 .auth-subtext {
   margin-top: 16px;
   text-align: center;
-  color: #cbd5e1;
+  color: #4b5563;
   font-size: 0.9rem;
 }
 
 .auth-link {
-  color: #60a5fa;
+  color: #2563eb;
   text-decoration: underline;
 }
 
 .auth-link:hover {
-  color: #93c5fd;
+  color: #1d4ed8;
 }
 
 .auth-note {
   margin-top: 20px;
   padding: 14px;
-  background: rgba(37, 99, 235, 0.15);
-  border: 1px solid #1d4ed8;
+  background: #e0ecff;
+  border: 1px solid #bfdbfe;
   border-radius: 10px;
-  color: #bfdbfe;
+  color: #1e3a8a;
   font-size: 0.9rem;
   line-height: 1.5;
+}
+
+/* Search results preview */
+.search-results {
+  margin-top: 20px;
+  display: grid;
+  gap: 12px;
+}
+
+.search-divider {
+  margin: 20px 0 16px;
+  border: 0;
+  border-top: 1px solid #1e293b;
+}
+
+.result-card {
+  background: #f3f8ff;
+  border: 1px solid #dbeafe;
+  border-radius: 6px;
+  padding: 10px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  color: #0f172a;
+  box-shadow: 0 10px 30px rgba(59, 130, 246, 0.14);
+}
+
+.result-title {
+  font-weight: 700;
+  margin-bottom: 6px;
+  color: #0f172a;
+}
+
+.result-meta {
+  font-size: 0.9rem;
+  color: #334155;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  color: #006efe;
+}
+
+.badge-past {
+  background: #e0f2fe;
+  border: 1px solid #93c5fd;
+}
+
+.badge-lecture {
+  background: #dcfce7;
+  border: 1px solid #86efac;
+}
+
+.ext-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 6px;
+}
+
+.ext-pill {
+  background: #e5edff;
+  color: #1e3a8a;
+  border: 1px solid #cbd5f5;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+}
+
+.rating {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #f59e0b;
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.rating-count {
+  color: #1f2937;
+  font-weight: 600;
 }
