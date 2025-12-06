@@ -49,6 +49,9 @@ export default function SearchPage() {
          searchAction(formData).then((data) => {
             setResults(data.items as PreviewItem[]);
             console.log('Search action returned items:', data.items);
+         }).catch((err) => {
+            console.error('Error during search action:', err);
+            setResults([]);
          });
       });
    };

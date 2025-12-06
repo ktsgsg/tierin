@@ -90,20 +90,23 @@ export async function searchAction(formData: FormData) {
    // 各検索結果を非同期で変換（教科情報を取得してフロントエンド用の形式に整形）
    const itemsPromise = await data.map(async (item: SearchResult) => {
       // 教科コードから教科情報を取得
-      const subjectData: subjectData = await getSubject(item.subject_code, cookie);
-      // フロントエンド用のデータ形式に変換
-      const view_item: PreviewItem = {
-         contents_id: item.contents_id,
-         title: item.title,
-         url: item.contents_id,
-         subject: subjectData.name,
-         teacher: subjectData.teachers.replace(/　/g, " "), // 全角スペースを半角に変換
-         year: item.year,
-         type: item.contents_type,
-         extensions: item.extensions.split(','), // カンマ区切り文字列を配列に変換
-         likes: item.stars,
-      };
-      return view_item;
+      const subjectdata: subjectData = await getSubject(item.subject_code, cookie);
+      if (subjectdata) {
+         // 教科情報が取得できなかったらパス
+         // フロントエンド用のデータ形式に変換
+         const view_item: PreviewItem = {
+            contents_id: item.contents_id,
+            title: item.title,
+            url: item.contents_id,
+            subject: subjectdata.name,
+            teacher: subjectdata.teachers.replace(/　/g, " "), // 全角スペースを半角に変換
+            year: item.year,
+            type: item.contents_type,
+            extensions: item.extensions.split(','), // カンマ区切り文字列を配列に変換
+            likes: item.stars,
+         };
+         return view_item;
+      }
    });
    // 全ての非同期処理が完了するのを待つ
    const items: PreviewItem[] = await Promise.all(itemsPromise);
