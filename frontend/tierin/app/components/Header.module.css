@@ -1,59 +1,105 @@
 .headerContainer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
     display: flex;
-    justify-content: center;
-    margin: 20px 0;
+    flex-direction: column;
+    background: #2a2a2a;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    padding: 0;
+    margin: 0;
+}
+
+.headerTop {
+    background: #A9FEFF;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.headerBottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    background: #1a2332;
+    border-bottom: 2px solid #3b82f6;
+}
+
+.navContainer {
+    display: flex;
+    margin-left: 40px;
+    gap: 10px;
 }
 
 /* ナビゲーションバー */
 .navItem {
     padding: 10px 20px;
-    border: 1px solid #000000;
-    border-left: none;
+    border: none;
     display: flex;
-    align-items: center; /* 垂直方向の中央揃え */
+    align-items: center;
+    /* 垂直方向の中央揃え */
     font-weight: bold;
-    color: black;
-    white-space: nowrap; /* テキストが折り返さないように */
+    color: #c9d1d9;
+    white-space: nowrap;
+    /* テキストが折り返さないように */
+    flex: 0 1 auto;
+    justify-content: center;
+    background-color: #1a2332;
+    border-radius: 6px;
 }
 
 /* 最初のナビゲーション項目の左側の境界線を表示 */
 .navItem:first-child {
-    border-left: 1px solid #000000;
+    border: none;
 }
 
 .logoArea {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: flex-end;
+    align-items: flex-start;
 }
 
 .logo {
     font-size: 1.5em;
     font-weight: bold;
+    color: #60a5fa;
 }
 
 .user_id {
     font-size: 0.7rem;
     font-weight: normal;
+    color: #5390d9;
 }
 
 /* リンクアイテム（ホーム、検索など） */
 .linkItem {
-    background-color: #B3E0F2;
+    background-color: #1a2332;
     text-decoration: none;
     cursor: pointer;
-    transition: background-color 0.3s ease; /* 色変化を滑らかに */
+    transition: background-color 0.3s ease;
+    /* 色変化を滑らかに */
+    color: #c9d1d9;
 }
 
 /* ホバー時の色変更 */
 .linkItem:hover {
-    background-color: #8FD8F4; /* ホバー時の色 */
+    background-color: #2a3a4a;
+    /* ホバー時の色 */
 }
 
 /* 検索窓 */
 .searchBar {
-    background-color: #B3E0F2;
+    background-color: #1a2332;
+    margin-left: auto;
+    margin-right: 40px;
+    border: none;
+    color: #c9d1d9;
+    border-radius: 6px;
 }
 
 .searchIcon {
@@ -64,9 +110,15 @@
 .searchInput {
     border: none;
     background: transparent;
-    outline: none; /* フォーカス時の枠線を消す */
+    outline: none;
+    /* フォーカス時の枠線を消す */
     font-size: 1em;
     padding: 0;
     /* 入力欄の幅 */
-    width: 230px; 
+    width: 230px;
+    color: #ffffff;
+}
+
+.searchInput::placeholder {
+    color: #a0a8b0;
 }

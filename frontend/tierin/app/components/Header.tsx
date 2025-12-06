@@ -18,11 +18,11 @@ type HeaderProps = {
     user_id: string;
 };
 
-export const Header = ({user_id}: HeaderProps) => {
+export const Header = ({ user_id }: HeaderProps) => {
     return (
         // ナビゲーションバー全体にクラスを適用
         <header className={styles.headerContainer}>
-            <div className={styles.navItem}>
+            <div className={styles.headerTop}>
                 <div className={styles.logoArea}>
                     <div className={styles.logo}>
                         🔗 Tierin
@@ -32,25 +32,26 @@ export const Header = ({user_id}: HeaderProps) => {
                     </div>
                 </div>
             </div>
-
-
-            {navItems.map((item) => (
-                <Link
-                    key={item.name}
-                    href={item.href}
-                    className={`${styles.navItem} ${styles.linkItem}`}
-                >
-                    {item.name}
-                </Link>
-            ))}
-
-            <div className={`${styles.navItem} ${styles.searchBar}`}>
-                <span className={styles.searchIcon}>🔍</span>
-                <input
-                    type="text"
-                    placeholder="タグ、またはキーワードを入力"
-                    className={styles.searchInput}
-                />
+            <div className={styles.headerBottom}>
+                <div className={styles.navContainer}>
+                    {navItems.map((item) => (
+                        <Link
+                            key={item.name}
+                            href={item.href}
+                            className={`${styles.navItem} ${styles.linkItem}`}
+                        >
+                            {item.name}
+                        </Link>
+                    ))}
+                </div>
+                <div className={`${styles.navItem} ${styles.searchBar}`}>
+                    <span className={styles.searchIcon}>🔍</span>
+                    <input
+                        type="text"
+                        placeholder="タグ、またはキーワードを入力"
+                        className={styles.searchInput}
+                    />
+                </div>
             </div>
         </header>
     );
