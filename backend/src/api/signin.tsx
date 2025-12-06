@@ -18,8 +18,7 @@ signin.post('/', async (c) => {
    const { data, error } = await supabase.auth.signInWithPassword({
       email: email,
       password: password,
-   })
-
+   });
    if (error) {
       return c.json({ error: error.message }, 400);
    }
