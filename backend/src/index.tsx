@@ -12,28 +12,14 @@ import { signin } from './api/signin.js';
 import { getsession } from './api/getsession.js';
 
 import { useSupabase } from './hooks/supabase/useSupabase.js';
+import { supabaseMiddleware } from './middleware/auth.middleware.js';
 
 const app = new Hono();
 app.use(logger());
 //ログインしているかどうかを判断するミドルウェア
-app.use('/api/*', async (c, next) => {
-  //supabase接続
-  const supabase = useSupabase().supabase;
-  const auth_token = getCookie(c, 'auth_token');
-  const userdata = await supabase.auth.getUser(auth_token || '');
-  //表示しているページがログインページならそのままnextへ
-  if (c.req.path === '/api/signin/' || c.req.path === '/api/signup/') {
-    await next();
-    return;
-  }
-  if (!userdata) {
-    return c.json({ error: 'Unauthorized' }, 401);
-  }
-  if (userdata.error) {
-    return c.json({ error: 'Unauthorized' }, 401);
-  }
-  await next();
-});
+
+
+app.use('/api/*', supabaseMiddleware());
 
 app.get('/', (c) => {
   return c.html(
