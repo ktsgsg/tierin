@@ -19,6 +19,8 @@ type PreviewItem = {
    likes: number; // いいね数
 };
 
+type SortOption = "likes" | "aiueo";
+
 /**
  * 資料検索ページ
  */
@@ -39,6 +41,19 @@ export default function SearchPage() {
 
    // 検索結果の状態管理
    const [results, setResults] = useState<PreviewItem[]>(previewResults);
+   const [sortOption, setSortOption] = useState<SortOption>("likes");
+
+   const applySort = (items: PreviewItem[], sort: SortOption) => {
+      const sorted = [...items];
+      if (sort === "likes") return sorted.sort((a, b) => b.likes - a.likes);
+      if (sort === "aiueo") return sorted.sort((a, b) => a.title.localeCompare(b.title, "ja"));
+      return sorted;
+   };
+
+   const handleSortChange = (nextSort: SortOption) => {
+      setSortOption(nextSort);
+      setResults((prev) => applySort(prev, nextSort));
+   };
 
    /**
     * 検索を実行する関数
@@ -47,7 +62,8 @@ export default function SearchPage() {
    const runSearch = (formData: FormData) => {
       startTransition(() => {
          searchAction(formData).then((data) => {
-            setResults(data.items as PreviewItem[]);
+            const items = (data.items as PreviewItem[])?.filter(Boolean) ?? [];
+            setResults(applySort(items, sortOption));
             console.log('Search action returned items:', data.items);
          }).catch((err) => {
             console.error('Error during search action:', err);
@@ -72,12 +88,6 @@ export default function SearchPage() {
             <span>教科: {item.subject}</span>
             <span>担当: {item.teacher}</span>
             <span>作成年: {item.year}</span>
-            <span className={`badge ${item.type === "past" ? "badge-past" : "badge-lecture"}`}>
-               {item.type === "past" ? "過去問" : "授業資料"}
-            </span>
-            <span className="rating">
-               ★<span className="rating-count">{item.likes}</span>
-            </span>
          </div>
          <div className="ext-list">
             {item.extensions.map((ext) => (
@@ -85,6 +95,12 @@ export default function SearchPage() {
                   .{ext}
                </span>
             ))}
+            <span className={`badge ${item.type === "past" ? "badge-past" : "badge-lecture"}`}>
+               {item.type === "past" ? "過去問" : "授業資料"}
+            </span>
+            <span className="rating">
+               ★<span className="rating-count">{item.likes}</span>
+            </span>
          </div>
       </div>
    );
@@ -243,6 +259,21 @@ export default function SearchPage() {
                   {isPending ? "検索中..." : "検索する"}
                </button>
             </form>
+
+            <div style={{ marginTop: 12, maxWidth: 200 }}>
+               <label htmlFor="sort" className="auth-label">
+                  並び替え
+               </label>
+               <select
+                  id="sort"
+                  className="auth-input"
+                  value={sortOption}
+                  onChange={(e) => handleSortChange(e.target.value as SortOption)}
+               >
+                  <option value="likes">いいねの数</option>
+                  <option value="aiueo">あいうえお順</option>
+               </select>
+            </div>
 
             <hr className="search-divider" />
 

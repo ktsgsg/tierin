@@ -97,7 +97,7 @@ export async function searchAction(formData: FormData) {
          const view_item: PreviewItem = {
             contents_id: item.contents_id,
             title: item.title,
-            url: item.contents_id,
+            url: "/preview/contents/" + item.contents_id,
             subject: subjectdata.name,
             teacher: subjectdata.teachers.replace(/　/g, " "), // 全角スペースを半角に変換
             year: item.year,
@@ -110,8 +110,10 @@ export async function searchAction(formData: FormData) {
    });
    // 全ての非同期処理が完了するのを待つ
    const items: PreviewItem[] = await Promise.all(itemsPromise);
+   // undefinedが混入する可能性があるため除去
+   const filteredItems = items.filter((item): item is PreviewItem => item !== undefined);
    return {
-      items: items,
+      items: filteredItems,
    };
 
 

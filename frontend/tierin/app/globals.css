@@ -2,7 +2,7 @@
 
 :root {
   --background: #010409;
-  --foreground: #c9d1d9;
+  --foreground: #161616;
 }
 
 body {
@@ -197,8 +197,9 @@ body {
 .ext-list {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
-  margin-top: 6px;
+  gap: 8px;
+  margin-top: 8px;
+  align-items: center;
 }
 
 .ext-pill {
