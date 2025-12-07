@@ -1,0 +1,90 @@
+.searchResults {
+   margin-top: 20px;
+   display: grid;
+   gap: 12px;
+}
+
+.searchDivider {
+   margin: 20px 0 16px;
+   border: 0;
+   border-top: 1px solid #d0d0d0;
+}
+
+.resultCard {
+   background: #ffffff;
+   border: 1px solid #e0e0e0;
+   border-radius: 6px;
+   padding: 10px 20px;
+   display: flex;
+   flex-direction: column;
+   gap: 6px;
+   color: #666666;
+   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.resultTitle {
+   font-weight: 700;
+   margin-bottom: 6px;
+   color: #1a1a1a;
+}
+
+.resultMeta {
+   font-size: 0.9rem;
+   color: #999999;
+   display: flex;
+   flex-wrap: wrap;
+   gap: 8px 12px;
+}
+
+.badge {
+   display: inline-flex;
+   align-items: center;
+   gap: 6px;
+   padding: 4px 10px;
+   border-radius: 999px;
+   font-size: 0.8rem;
+   color: #1a1a1a;
+}
+
+.badgePast {
+   background: #d4f1d4;
+   border: 1px solid #56D6E4;
+   color: #1a7a6a;
+}
+
+.badgeLecture {
+   background: #f0f0f0;
+   border: 1px solid #d0d0d0;
+   color: #666666;
+}
+
+.extList {
+   display: flex;
+   flex-wrap: wrap;
+   gap: 8px;
+   margin-top: 8px;
+   align-items: center;
+}
+
+.extPill {
+   background: #f0f0f0;
+   color: #666666;
+   border: 1px solid #d0d0d0;
+   padding: 4px 8px;
+   border-radius: 6px;
+   font-size: 0.8rem;
+}
+
+.rating {
+   display: inline-flex;
+   align-items: center;
+   gap: 6px;
+   color: #ff9800;
+   font-weight: 700;
+   font-size: 0.95rem;
+}
+
+.ratingCount {
+   color: #666666;
+   font-weight: 600;
+}

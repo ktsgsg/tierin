@@ -1,0 +1,103 @@
+.faqContainer {
+   display: flex;
+   flex-direction: column;
+   gap: 12px;
+   margin-top: 20px;
+}
+
+.faqItem {
+   border: 1px solid #e0e0e0;
+   border-radius: 8px;
+   overflow: hidden;
+   background: #ffffff;
+}
+
+.faqQuestion {
+   width: 100%;
+   padding: 16px;
+   background: #f9f9f9;
+   border: none;
+   border-bottom: 1px solid #e0e0e0;
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   cursor: pointer;
+   transition: background-color 0.2s ease;
+}
+
+.faqQuestion:hover {
+   background: #f0f0f0;
+}
+
+.questionText {
+   text-align: left;
+   font-weight: 600;
+   color: #1a1a1a;
+   font-size: 1rem;
+}
+
+.toggleIcon {
+   font-size: 1.5rem;
+   color: #56D6E4;
+   font-weight: bold;
+   flex-shrink: 0;
+}
+
+.faqAnswer {
+   padding: 16px;
+   background: #ffffff;
+   color: #666666;
+   line-height: 1.6;
+   font-size: 0.95rem;
+   animation: slideDown 0.2s ease;
+}
+
+@keyframes slideDown {
+   from {
+      opacity: 0;
+      max-height: 0;
+   }
+
+   to {
+      opacity: 1;
+      max-height: 500px;
+
+      .contactSection {
+         margin-top: 40px;
+         padding: 24px;
+         background: #f9f9f9;
+         border: 1px solid #e0e0e0;
+         border-radius: 8px;
+         text-align: center;
+      }
+
+      .contactTitle {
+         font-size: 1.2rem;
+         font-weight: 700;
+         color: #1a1a1a;
+         margin-bottom: 12px;
+      }
+
+      .contactText {
+         color: #666666;
+         font-size: 0.95rem;
+         margin-bottom: 16px;
+         line-height: 1.5;
+      }
+
+      .contactEmail {
+         display: inline-block;
+         padding: 12px 24px;
+         background: #56D6E4;
+         color: #1a1a1a;
+         text-decoration: none;
+         border-radius: 6px;
+         font-weight: 600;
+         transition: background-color 0.2s ease;
+      }
+
+      .contactEmail:hover {
+         background: #36b8c6;
+      }
+   }
+}

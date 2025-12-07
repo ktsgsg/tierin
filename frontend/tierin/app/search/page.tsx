@@ -3,6 +3,7 @@
 import { FormEvent, useEffect, useState, useTransition } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { searchAction } from "./searchAction";
+import styles from "./page.module.css";
 import { Header } from "@/app/components/Header";
 
 /**
@@ -80,28 +81,30 @@ export default function SearchPage() {
     * @param idx - 配列内のインデックス（keyとして使用）
     */
    const renderResultCard = (item: PreviewItem, idx: number) => (
-      <div key={idx} className="result-card">
-         <div className="result-title">
+      <div key={idx} className={styles.resultCard}>
+         <div className={styles.resultTitle}>
             <a href={item.url} className="auth-link" target="_blank" rel="noreferrer">
                {item.title}
             </a>
          </div>
-         <div className="result-meta">
+         <div className={styles.resultMeta}>
             <span>教科: {item.subject}</span>
             <span>担当: {item.teacher}</span>
             <span>作成年: {item.year}</span>
          </div>
-         <div className="ext-list">
+         <div className={styles.extList}>
             {item.extensions.map((ext) => (
-               <span key={ext} className="ext-pill">
+               <span key={ext} className={styles.extPill}>
                   .{ext}
                </span>
             ))}
-            <span className={`badge ${item.type === "past" ? "badge-past" : "badge-lecture"}`}>
+            <span
+               className={`${styles.badge} ${item.type === "past" ? styles.badgePast : styles.badgeLecture}`}
+            >
                {item.type === "past" ? "過去問" : "授業資料"}
             </span>
-            <span className="rating">
-               ★<span className="rating-count">{item.likes}</span>
+            <span className={styles.rating}>
+               ★<span className={styles.ratingCount}>{item.likes}</span>
             </span>
          </div>
       </div>
@@ -112,7 +115,7 @@ export default function SearchPage() {
     * @param items - 表示する検索結果アイテムの配列
     */
    const renderResults = (items: PreviewItem[]) => (
-      <div className="search-results">
+      <div className={styles.searchResults}>
          {items.map((item, idx) => renderResultCard(item, idx))}
       </div>
    );
@@ -173,7 +176,7 @@ export default function SearchPage() {
    return (
       <>
          <Header />
-         <div className="auth-page" style={{ paddingTop: 32, paddingBottom: 48 }}>
+         <div className="auth-page with-header" style={{ paddingTop: 32, paddingBottom: 48 }}>
             <div className="auth-card">
                <h1 className="auth-title">資料検索</h1>
 
@@ -279,7 +282,7 @@ export default function SearchPage() {
                   </select>
                </div>
 
-               <hr className="search-divider" />
+               <hr className={styles.searchDivider} />
 
                {renderResults(results)}
             </div>
