@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f0f2f5;
+  --foreground: #1a1a1a;
 }
 
 @theme inline {
@@ -14,13 +14,228 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #f0f2f5;
+    --foreground: #1a1a1a;
   }
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background: #f5f5f5;
+  color: #333333;
   font-family: Arial, Helvetica, sans-serif;
+  padding-top: 110px;
+}
+
+/* Auth pages shared styles */
+.auth-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #e8ecf1 0%, #f5f5f5 100%);
+  padding: 24px;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 960px;
+  background: #ffffff;
+  padding: 28px;
+  border-radius: 8px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e0e0e0;
+}
+
+.auth-title {
+  color: #1a1a1a;
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Compact spacing for search page */
+.auth-form.search-compact {
+  gap: 12px;
+}
+
+.auth-label {
+  display: block;
+  margin-bottom: 8px;
+  color: #666666;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.auth-input {
+  width: 100%;
+  padding: 10px 12px;
+  background: #ffffff;
+  border: 1px solid #d0d0d0;
+  border-radius: 6px;
+  color: #333333;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.auth-input:focus {
+  border-color: #56D6E4;
+  box-shadow: 0 0 0 2px rgba(86, 214, 228, 0.25);
+  background: #fafafa;
+}
+
+.auth-error {
+  color: #f4d3d6;
+  background: #2a0f12;
+  padding: 10px 12px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  border: 1px solid #7f1d1d;
+}
+
+.auth-button {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: none;
+  background: #56D6E4;
+  color: #1a1a1a;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease, opacity 0.2s ease;
+}
+
+.auth-button:hover:not(:disabled) {
+  background: #36b8c6;
+}
+
+.auth-button:disabled {
+  background: #e0e0e0;
+  cursor: not-allowed;
+  opacity: 0.8;
+}
+
+.auth-subtext {
+  margin-top: 16px;
+  text-align: center;
+  color: #999999;
+  font-size: 0.9rem;
+}
+
+.auth-link {
+  color: #56D6E4;
+  text-decoration: underline;
+}
+
+.auth-link:hover {
+  color: #36b8c6;
+}
+
+.auth-note {
+  margin-top: 20px;
+  padding: 14px;
+  background: #f5f5f5;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  color: #666666;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+/* Search results preview */
+.search-results {
+  margin-top: 20px;
+  display: grid;
+  gap: 12px;
+}
+
+.search-divider {
+  margin: 20px 0 16px;
+  border: 0;
+  border-top: 1px solid #d0d0d0;
+}
+
+.result-card {
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  padding: 10px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  color: #666666;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.result-title {
+  font-weight: 700;
+  margin-bottom: 6px;
+  color: #1a1a1a;
+}
+
+.result-meta {
+  font-size: 0.9rem;
+  color: #999999;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  color: #1a1a1a;
+}
+
+.badge-past {
+  background: #d4f1d4;
+  border: 1px solid #56D6E4;
+  color: #1a7a6a;
+}
+
+.badge-lecture {
+  background: #f0f0f0;
+  border: 1px solid #d0d0d0;
+  color: #666666;
+}
+
+.ext-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+  align-items: center;
+}
+
+.ext-pill {
+  background: #f0f0f0;
+  color: #666666;
+  border: 1px solid #d0d0d0;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+}
+
+.rating {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #ff9800;
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.rating-count {
+  color: #666666;
+  font-weight: 600;
 }
