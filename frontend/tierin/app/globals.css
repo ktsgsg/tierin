@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 :root {
-  --background: #1a1a1a;
-  --foreground: #ffffff;
+  --background: #f0f2f5;
+  --foreground: #1a1a1a;
 }
 
 @theme inline {
@@ -14,14 +14,14 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #1a1a1a;
-    --foreground: #ffffff;
+    --background: #f0f2f5;
+    --foreground: #1a1a1a;
   }
 }
 
 body {
-  background: #010409;
-  color: #c9d1d9;
+  background: #f5f5f5;
+  color: #333333;
   font-family: Arial, Helvetica, sans-serif;
   padding-top: 110px;
 }
@@ -32,22 +32,22 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #0a0f17 0%, #010409 100%);
+  background: linear-gradient(135deg, #e8ecf1 0%, #f5f5f5 100%);
   padding: 24px;
 }
 
 .auth-card {
   width: 100%;
   max-width: 960px;
-  background: #0d1117;
+  background: #ffffff;
   padding: 28px;
   border-radius: 8px;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
-  border: 1px solid #21262d;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e0e0e0;
 }
 
 .auth-title {
-  color: #f0f6fc;
+  color: #1a1a1a;
   font-size: 1.5rem;
   font-weight: 700;
   text-align: center;
@@ -68,7 +68,7 @@ body {
 .auth-label {
   display: block;
   margin-bottom: 8px;
-  color: #9ea7b3;
+  color: #666666;
   font-size: 0.9rem;
   font-weight: 500;
 }
@@ -76,18 +76,18 @@ body {
 .auth-input {
   width: 100%;
   padding: 10px 12px;
-  background: #0a0f16;
-  border: 1px solid #21262d;
+  background: #ffffff;
+  border: 1px solid #d0d0d0;
   border-radius: 6px;
-  color: #c9d1d9;
+  color: #333333;
   outline: none;
   transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
 }
 
 .auth-input:focus {
-  border-color: #3fb950;
-  box-shadow: 0 0 0 2px rgba(63, 185, 80, 0.25);
-  background: #0d141e;
+  border-color: #56D6E4;
+  box-shadow: 0 0 0 2px rgba(86, 214, 228, 0.25);
+  background: #fafafa;
 }
 
 .auth-error {
@@ -104,19 +104,19 @@ body {
   padding: 10px 12px;
   border-radius: 8px;
   border: none;
-  background: #2ea043;
-  color: #f0f6fc;
+  background: #56D6E4;
+  color: #1a1a1a;
   font-weight: 600;
   cursor: pointer;
   transition: background 0.2s ease, opacity 0.2s ease;
 }
 
 .auth-button:hover:not(:disabled) {
-  background: #2c974b;
+  background: #36b8c6;
 }
 
 .auth-button:disabled {
-  background: #21262d;
+  background: #e0e0e0;
   cursor: not-allowed;
   opacity: 0.8;
 }
@@ -124,26 +124,26 @@ body {
 .auth-subtext {
   margin-top: 16px;
   text-align: center;
-  color: #9ea7b3;
+  color: #999999;
   font-size: 0.9rem;
 }
 
 .auth-link {
-  color: #2ea043;
+  color: #56D6E4;
   text-decoration: underline;
 }
 
 .auth-link:hover {
-  color: #3fb950;
+  color: #36b8c6;
 }
 
 .auth-note {
   margin-top: 20px;
   padding: 14px;
-  background: #0b0f16;
-  border: 1px solid #21262d;
+  background: #f5f5f5;
+  border: 1px solid #e0e0e0;
   border-radius: 10px;
-  color: #c9d1d9;
+  color: #666666;
   font-size: 0.9rem;
   line-height: 1.5;
 }
@@ -158,30 +158,30 @@ body {
 .search-divider {
   margin: 20px 0 16px;
   border: 0;
-  border-top: 1px solid #30363d;
+  border-top: 1px solid #d0d0d0;
 }
 
 .result-card {
-  background: #0d1117;
-  border: 1px solid #21262d;
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
   border-radius: 6px;
   padding: 10px 20px;
   display: flex;
   flex-direction: column;
   gap: 6px;
-  color: #c9d1d9;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
+  color: #666666;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
 }
 
 .result-title {
   font-weight: 700;
   margin-bottom: 6px;
-  color: #f0f6fc;
+  color: #1a1a1a;
 }
 
 .result-meta {
   font-size: 0.9rem;
-  color: #9ea7b3;
+  color: #999999;
   display: flex;
   flex-wrap: wrap;
   gap: 8px 12px;
@@ -194,19 +194,19 @@ body {
   padding: 4px 10px;
   border-radius: 999px;
   font-size: 0.8rem;
-  color: #c9d1d9;
+  color: #1a1a1a;
 }
 
 .badge-past {
-  background: #0f1a12;
-  border: 1px solid #2ea043;
-  color: #3fb950;
+  background: #d4f1d4;
+  border: 1px solid #56D6E4;
+  color: #1a7a6a;
 }
 
 .badge-lecture {
-  background: #161b22;
-  border: 1px solid #30363d;
-  color: #c9d1d9;
+  background: #f0f0f0;
+  border: 1px solid #d0d0d0;
+  color: #666666;
 }
 
 .ext-list {
@@ -218,9 +218,9 @@ body {
 }
 
 .ext-pill {
-  background: #161b22;
-  color: #c9d1d9;
-  border: 1px solid #30363d;
+  background: #f0f0f0;
+  color: #666666;
+  border: 1px solid #d0d0d0;
   padding: 4px 8px;
   border-radius: 6px;
   font-size: 0.8rem;
@@ -230,12 +230,12 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  color: #fbbf24;
+  color: #ff9800;
   font-weight: 700;
   font-size: 0.95rem;
 }
 
 .rating-count {
-  color: #c9d1d9;
+  color: #666666;
   font-weight: 600;
 }

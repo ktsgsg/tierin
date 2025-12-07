@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-
+import { useRouter } from "next/navigation";
 import Link from 'next/link';
 // CSS Modulesをインポート
 import styles from './Header.module.css';
@@ -27,18 +27,26 @@ export const Header = ({ userEmail = "ユーザー" }: HeaderProps) => {
 
     //emailの状態管理
     const [email, setEmail] = useState<string>(userEmail);
+    const [searchTitle, setSearchTitle] = useState<string>("");
+    const router = useRouter();
 
     useEffect(() => {
         const fetchEmail = async () => {
-            console.log('Fetching email from headers...');
+            //console.log('Fetching email from headers...');
             const fetchedEmail = await GetEmailHeader();
-            console.log('Fetched email:', fetchedEmail);
+            //console.log('Fetched email:', fetchedEmail);
             if (fetchedEmail) {
                 setEmail(fetchedEmail);
             }
         }
         fetchEmail();
     }, []);
+
+    const handleSearchKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === 'Enter' && searchTitle.trim()) {
+            router.push(`/search?title=${encodeURIComponent(searchTitle)}`);
+        }
+    };
 
     return (
         // ナビゲーションバー全体にクラスを適用
@@ -69,8 +77,11 @@ export const Header = ({ userEmail = "ユーザー" }: HeaderProps) => {
                     <span className={styles.searchIcon}>🔍</span>
                     <input
                         type="text"
-                        placeholder="タグ、またはキーワードを入力"
+                        placeholder="タイトルを入力"
                         className={styles.searchInput}
+                        value={searchTitle}
+                        onChange={(e) => setSearchTitle(e.target.value)}
+                        onKeyDown={handleSearchKeyDown}
                     />
                 </div>
             </div>

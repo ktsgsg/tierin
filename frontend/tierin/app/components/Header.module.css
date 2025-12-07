@@ -37,19 +37,21 @@
 
 /* ナビゲーションバー */
 .navItem {
-    padding: 10px 20px;
+    padding: 6px 20px;
     border: none;
     display: flex;
     align-items: center;
     /* 垂直方向の中央揃え */
     font-weight: bold;
-    color: #c9d1d9;
+    color: #ffffff;
     white-space: nowrap;
     /* テキストが折り返さないように */
     flex: 0 1 auto;
     justify-content: center;
-    background-color: #1a2332;
-    border-radius: 6px;
+    background-color: #010409;
+    border-radius: 8px;
+    box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.1);
+    transition: all 0.2s ease;
 }
 
 /* 最初のナビゲーション項目の左側の境界線を表示 */
@@ -78,28 +80,31 @@
 
 /* リンクアイテム（ホーム、検索など） */
 .linkItem {
-    background-color: #1a2332;
+    background-color: #010409;
     text-decoration: none;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: all 0.2s ease;
     /* 色変化を滑らかに */
-    color: #c9d1d9;
+    color: #ffffff;
 }
 
 /* ホバー時の色変更 */
 .linkItem:hover {
-    background-color: #2a3a4a;
+    background-color: #1a1a1a;
+    box-shadow: inset 0 2px 6px rgba(255, 255, 255, 0.15);
     /* ホバー時の色 */
 }
 
 /* 検索窓 */
 .searchBar {
-    background-color: #1a2332;
+    background-color: transparent;
     margin-left: auto;
     margin-right: 40px;
     border: none;
-    color: #c9d1d9;
-    border-radius: 6px;
+    color: #1a1a1a;
+    border-radius: 8px;
+    box-shadow: none;
+    padding: 6px 15px;
 }
 
 .searchIcon {
@@ -116,9 +121,9 @@
     padding: 0;
     /* 入力欄の幅 */
     width: 230px;
-    color: #ffffff;
+    color: #56D6E4;
 }
 
 .searchInput::placeholder {
-    color: #a0a8b0;
+    color: rgba(255, 255, 255, 0.6);
 }
