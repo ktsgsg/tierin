@@ -1,0 +1,147 @@
+.searchContainer {
+   display: flex;
+   gap: 32px;
+   width: 100%;
+   max-width: 1200px;
+   margin: 0 auto;
+}
+
+.searchSidebar {
+   flex: 0 0 300px;
+   position: sticky;
+   top: 120px;
+}
+
+.searchForm {
+   background: #ffffff;
+   padding: 24px;
+   border-radius: 8px;
+   border: 1px solid #e0e0e0;
+   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.searchTitle {
+   font-size: 1.1rem;
+   font-weight: 700;
+   color: #1a1a1a;
+   margin-bottom: 16px;
+}
+
+.formGroup {
+   margin-bottom: 16px;
+}
+
+.formGroup:last-of-type {
+   margin-bottom: 0;
+}
+
+.sortSection {
+   margin-top: 20px;
+   padding-top: 20px;
+   border-top: 1px solid #e0e0e0;
+}
+
+.searchResults {
+   flex: 1;
+   min-width: 0;
+}
+
+.searchResultsTitle {
+   font-size: 1.1rem;
+   font-weight: 700;
+   color: #1a1a1a;
+   margin-bottom: 16px;
+}
+
+.resultsList {
+   display: flex;
+   flex-direction: column;
+   gap: 12px;
+}
+
+.resultCard {
+   background: #ffffff;
+   border: 1px solid #e0e0e0;
+   border-radius: 6px;
+   padding: 16px;
+   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+   transition: box-shadow 0.2s ease;
+}
+
+.resultCard:hover {
+   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.resultTitle {
+   font-weight: 700;
+   margin-bottom: 8px;
+   color: #1a1a1a;
+   font-size: 1rem;
+}
+
+.resultMeta {
+   font-size: 0.85rem;
+   color: #999999;
+   display: flex;
+   flex-wrap: wrap;
+   gap: 12px;
+   margin-bottom: 8px;
+}
+
+.extList {
+   display: flex;
+   flex-wrap: wrap;
+   gap: 8px;
+   align-items: center;
+}
+
+.extPill {
+   background: #f0f0f0;
+   color: #666666;
+   border: 1px solid #d0d0d0;
+   padding: 4px 8px;
+   border-radius: 6px;
+   font-size: 0.8rem;
+}
+
+.badge {
+   display: inline-flex;
+   align-items: center;
+   gap: 6px;
+   padding: 4px 10px;
+   border-radius: 999px;
+   font-size: 0.8rem;
+   color: #1a1a1a;
+}
+
+.badgePast {
+   background: #d4f1d4;
+   border: 1px solid #56D6E4;
+   color: #1a7a6a;
+}
+
+.badgeLecture {
+   background: #f0f0f0;
+   border: 1px solid #d0d0d0;
+   color: #666666;
+}
+
+.rating {
+   display: inline-flex;
+   align-items: center;
+   gap: 4px;
+   color: #ff9800;
+   font-weight: 700;
+   font-size: 0.9rem;
+}
+
+.ratingCount {
+   color: #666666;
+   font-weight: 600;
+}
+
+.noResults {
+   padding: 40px 20px;
+   text-align: center;
+   color: #999999;
+}
