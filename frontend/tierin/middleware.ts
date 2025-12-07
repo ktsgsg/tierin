@@ -29,7 +29,16 @@ export async function middleware(request: NextRequest) {
       httpOnly: true,
       expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), // 30日間有効
    });
-   return NextResponse.next(); // 以降の処理を継続する
+   
+   // ユーザーメールアドレスをリクエストヘッダーに追加
+   const requestHeaders = new Headers(request.headers);
+   requestHeaders.set('X-User-Email', data.user.email);
+   
+   return NextResponse.next({
+      request: {
+         headers: requestHeaders,
+      }
+   });
 }
 
 // Middlewareを実行するパスを指定

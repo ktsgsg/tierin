@@ -3,6 +3,7 @@
 import { FormEvent, useEffect, useState, useTransition } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { searchAction } from "./searchAction";
+import { Header } from "@/app/components/Header";
 
 /**
  * 検索結果アイテムの型定義
@@ -38,6 +39,7 @@ export default function SearchPage() {
 
    // 初期表示用の空配列
    const previewResults: PreviewItem[] = [];
+
 
    // 検索結果の状態管理
    const [results, setResults] = useState<PreviewItem[]>(previewResults);
@@ -169,116 +171,119 @@ export default function SearchPage() {
    }, [searchParams]);
 
    return (
-      <div className="auth-page" style={{ paddingTop: 32, paddingBottom: 48 }}>
-         <div className="auth-card">
-            <h1 className="auth-title">資料検索</h1>
+      <>
+         <Header />
+         <div className="auth-page" style={{ paddingTop: 32, paddingBottom: 48 }}>
+            <div className="auth-card">
+               <h1 className="auth-title">資料検索</h1>
 
-            <p className="auth-subtext" style={{ marginTop: 0, marginBottom: 8 }}>
-               条件を入力して資料を検索できます。
-            </p>
+               <p className="auth-subtext" style={{ marginTop: 0, marginBottom: 8 }}>
+                  条件を入力して資料を検索できます。
+               </p>
 
-            <form className="auth-form search-compact" onSubmit={handleSubmit} method="get">
-               <div>
-                  <label htmlFor="title" className="auth-label">
-                     資料のタイトル
-                  </label>
-                  <input
-                     id="title"
-                     name="title"
-                     type="text"
-                     className="auth-input"
-                     placeholder="例: 2023年度 期末試験"
-                     defaultValue={searchParams.get("title") ?? ""}
-                  />
-               </div>
+               <form className="auth-form search-compact" onSubmit={handleSubmit} method="get">
+                  <div>
+                     <label htmlFor="title" className="auth-label">
+                        資料のタイトル
+                     </label>
+                     <input
+                        id="title"
+                        name="title"
+                        type="text"
+                        className="auth-input"
+                        placeholder="例: 2023年度 期末試験"
+                        defaultValue={searchParams.get("title") ?? ""}
+                     />
+                  </div>
 
-               <div>
-                  <label htmlFor="subject" className="auth-label">
-                     使用された教科
-                  </label>
-                  <input
-                     id="subject"
-                     name="subject"
-                     type="text"
-                     className="auth-input"
-                     placeholder="例: 線形代数"
-                     defaultValue={searchParams.get("subject") ?? ""}
-                  />
-               </div>
+                  <div>
+                     <label htmlFor="subject" className="auth-label">
+                        使用された教科
+                     </label>
+                     <input
+                        id="subject"
+                        name="subject"
+                        type="text"
+                        className="auth-input"
+                        placeholder="例: 線形代数"
+                        defaultValue={searchParams.get("subject") ?? ""}
+                     />
+                  </div>
 
-               <div>
-                  <label htmlFor="teacher" className="auth-label">
-                     教科担当
-                  </label>
-                  <input
-                     id="teacher"
-                     name="teacher"
-                     type="text"
-                     className="auth-input"
-                     placeholder="例: 山田太郎"
-                     defaultValue={searchParams.get("teacher") ?? ""}
-                  />
-               </div>
+                  <div>
+                     <label htmlFor="teacher" className="auth-label">
+                        教科担当
+                     </label>
+                     <input
+                        id="teacher"
+                        name="teacher"
+                        type="text"
+                        className="auth-input"
+                        placeholder="例: 山田太郎"
+                        defaultValue={searchParams.get("teacher") ?? ""}
+                     />
+                  </div>
 
-               <div>
-                  <label htmlFor="year" className="auth-label">
-                     作成年
+                  <div>
+                     <label htmlFor="year" className="auth-label">
+                        作成年
+                     </label>
+                     <select
+                        id="year"
+                        name="year"
+                        className="auth-input"
+                        defaultValue={searchParams.get("year") ?? ""}
+                     >
+                        <option value="">指定なし</option>
+                        {yearOptions.map((year) => (
+                           <option key={year} value={year}>
+                              {year}年
+                           </option>
+                        ))}
+                     </select>
+                  </div>
+
+                  <div>
+                     <label htmlFor="type" className="auth-label">
+                        種別
+                     </label>
+                     <select
+                        id="type"
+                        name="type"
+                        className="auth-input"
+                        defaultValue={searchParams.get("type") ?? ""}
+                     >
+                        <option value="">指定なし</option>
+                        <option value="past">過去問</option>
+                        <option value="lecture">授業資料</option>
+                     </select>
+                  </div>
+
+                  <button type="submit" className="auth-button" disabled={isPending}>
+                     {isPending ? "検索中..." : "検索する"}
+                  </button>
+               </form>
+
+               <div style={{ marginTop: 12, maxWidth: 200 }}>
+                  <label htmlFor="sort" className="auth-label">
+                     並び替え
                   </label>
                   <select
-                     id="year"
-                     name="year"
+                     id="sort"
                      className="auth-input"
-                     defaultValue={searchParams.get("year") ?? ""}
+                     value={sortOption}
+                     onChange={(e) => handleSortChange(e.target.value as SortOption)}
                   >
-                     <option value="">指定なし</option>
-                     {yearOptions.map((year) => (
-                        <option key={year} value={year}>
-                           {year}年
-                        </option>
-                     ))}
+                     <option value="likes">いいねの数</option>
+                     <option value="aiueo">あいうえお順</option>
                   </select>
                </div>
 
-               <div>
-                  <label htmlFor="type" className="auth-label">
-                     種別
-                  </label>
-                  <select
-                     id="type"
-                     name="type"
-                     className="auth-input"
-                     defaultValue={searchParams.get("type") ?? ""}
-                  >
-                     <option value="">指定なし</option>
-                     <option value="past">過去問</option>
-                     <option value="lecture">授業資料</option>
-                  </select>
-               </div>
+               <hr className="search-divider" />
 
-               <button type="submit" className="auth-button" disabled={isPending}>
-                  {isPending ? "検索中..." : "検索する"}
-               </button>
-            </form>
-
-            <div style={{ marginTop: 12, maxWidth: 200 }}>
-               <label htmlFor="sort" className="auth-label">
-                  並び替え
-               </label>
-               <select
-                  id="sort"
-                  className="auth-input"
-                  value={sortOption}
-                  onChange={(e) => handleSortChange(e.target.value as SortOption)}
-               >
-                  <option value="likes">いいねの数</option>
-                  <option value="aiueo">あいうえお順</option>
-               </select>
+               {renderResults(results)}
             </div>
-
-            <hr className="search-divider" />
-
-            {renderResults(results)}
          </div>
-      </div>
+      </>
    );
 }

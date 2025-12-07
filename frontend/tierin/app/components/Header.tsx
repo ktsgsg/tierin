@@ -1,6 +1,11 @@
+"use client";
+
+import { useEffect, useState } from "react";
+
 import Link from 'next/link';
 // CSS Modulesをインポート
 import styles from './Header.module.css';
+import { GetEmailHeader } from './headerAction';
 
 interface NavItem {
     name: string;
@@ -14,11 +19,27 @@ const navItems: NavItem[] = [
     { name: 'FAQ', href: '/faq' },
 ];
 
-type HeaderProps = {
-    user_id: string;
-};
+interface HeaderProps {
+    userEmail?: string;
+}
 
-export const Header = ({ user_id }: HeaderProps) => {
+export const Header = ({ userEmail = "ユーザー" }: HeaderProps) => {
+
+    //emailの状態管理
+    const [email, setEmail] = useState<string>(userEmail);
+
+    useEffect(() => {
+        const fetchEmail = async () => {
+            console.log('Fetching email from headers...');
+            const fetchedEmail = await GetEmailHeader();
+            console.log('Fetched email:', fetchedEmail);
+            if (fetchedEmail) {
+                setEmail(fetchedEmail);
+            }
+        }
+        fetchEmail();
+    }, []);
+
     return (
         // ナビゲーションバー全体にクラスを適用
         <header className={styles.headerContainer}>
@@ -28,7 +49,7 @@ export const Header = ({ user_id }: HeaderProps) => {
                         🔗 Tierin
                     </div>
                     <div className={styles.user_id}>
-                        {user_id} ログイン中
+                        {email} ログイン中
                     </div>
                 </div>
             </div>
