@@ -1,0 +1,11 @@
+.resource_list {
+    list-style-type: none;
+    margin-bottom: 20px;
+}
+
+.resource_item {
+    margin-bottom: 10px;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
