@@ -1,27 +1,33 @@
-export default async function PreviewPage() {
-    const response = await fetch('http://api:3000/api/preview/contents?contents_id=f7ec3b35-6415-47c8-bfe2-09e70b6e2bbd', {
-        cache: 'no-store', 
-    });
+export default async function PreviewPage(props: any) {
+    const searchParams = await props.searchParams;
+    const contents_id = searchParams.contents_id;
 
-    console.log('response', response.status);
+    if (!contents_id) {
+        return <p>contents_id is required</p>;
+    }
+
+    const response = await fetch(
+        `http://api:3000/api/preview/contents?contents_id=${contents_id}`,
+        {
+            cache: 'no-store'
+        }
+    )
     const data = await response.json();
     const resourceBase = 'http://localhost:3000/storage/resources/';
+
     return (
         <div>
-            {/* <pre>{JSON.stringify(data, null, 2)}</pre> */}
-            <h1>Preview Page</h1>
+            <h1>Content Preview</h1>
             <h2>{data.title}</h2>
             <p>Contents ID: {data.contents_id}</p>
-            <h3>Resource: </h3>
-            {/* {画像やPDFをここに表示} */}
-            <p>Resources:</p>
+            <p>Resources</p>
             <ul>
                 {data.metadata.resources.map((resource: string) => {
                     const resourceUrl = resourceBase + resource;
                     if (resource.endsWith('.jpeg') || resource.endsWith('.jpg') || resource.endsWith('.png')) {
                         return (
                             <li key={resource}>
-                                <img src={resourceUrl} alt={`Resource`} width={200} />
+                                <img src={resourceUrl} alt={`Resource`} width={800} />
                             </li>
                         );
                     } else if (resource.endsWith('.pdf')) {
