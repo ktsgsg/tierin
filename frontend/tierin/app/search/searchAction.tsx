@@ -54,7 +54,7 @@ export async function searchAction(formData: FormData) {
    const subject_code = formData.get("subject_code") as string;
    const year = formData.get("year") as string;
    const contents_type = formData.get("contents_type") as string;
-   const subject_name = formData.get("subject_name") as string;
+   const subject_name = formData.get("subject") as string;
    const teacher = formData.get("teacher") as string;
 
    // URLクエリパラメータを構築（値がある項目のみ追加）
@@ -86,6 +86,8 @@ export async function searchAction(formData: FormData) {
    }
 
    const data = await response.json();
+   console.log('Search results:', data);
+   console.log('params:', params.toString());
 
    // 各検索結果を非同期で変換（教科情報を取得してフロントエンド用の形式に整形）
    const itemsPromise = await data.map(async (item: SearchResult) => {

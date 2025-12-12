@@ -38,8 +38,8 @@ posting.post('/', async (c) => {
    const contents = {
       'contents_id': crypt.randomUUID(), // ランダムなIDを生成,認識しやすいようにUUIDを使う
       'title': formData.get("title"), // タイトル ユニークでなくてもよし
-      'user_id': 'anonymous', // とりあえず匿名ユーザーで
-      'subject_code': '0000', // 科目コード 仮で0
+      'user_id': formData.get("userid") || 'anonymous', // とりあえず匿名ユーザーで
+      'subject_code': formData.get("subject_code") || '0000', // 科目コード 仮で0
       'year': formData.get("year"), // 年度
       'posting_time': new Date().toISOString(), // 投稿時間 現在時刻
       'contents_type': formData.get("contents_type"), // このコンテンツの種類

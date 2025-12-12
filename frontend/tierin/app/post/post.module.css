@@ -1,0 +1,192 @@
+.postContainer {
+   width: 100%;
+   max-width: 768px;
+   margin: 0 auto;
+}
+
+.postCard {
+   background: #ffffff;
+   padding: 32px;
+   border-radius: 8px;
+   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+   border: 1px solid #e0e0e0;
+}
+
+.postTitle {
+   font-size: 1.5rem;
+   font-weight: 700;
+   color: #1a1a1a;
+   margin-bottom: 16px;
+}
+
+.postDescription {
+   font-size: 0.9rem;
+   color: #666666;
+   margin-bottom: 24px;
+}
+
+.postForm {
+   display: flex;
+   flex-direction: column;
+   gap: 24px;
+}
+
+.formGrid {
+   display: grid;
+   gap: 16px;
+   grid-template-columns: repeat(2, 1fr);
+}
+
+.formGroup {
+   display: flex;
+   flex-direction: column;
+}
+
+.radioGroup {
+   display: flex;
+   gap: 16px;
+   font-size: 0.9rem;
+   color: #666666;
+}
+
+.radioLabel {
+   display: inline-flex;
+   align-items: center;
+   gap: 8px;
+   cursor: pointer;
+}
+
+.radioInput {
+   accent-color: #56D6E4;
+}
+
+.fileSection {
+   display: flex;
+   flex-direction: column;
+   gap: 12px;
+}
+
+.fileAddButton {
+   display: inline-flex;
+   cursor: pointer;
+   align-items: center;
+   gap: 8px;
+   background: #ffffff;
+   border: 1px solid #d0d0d0;
+   padding: 10px 16px;
+   border-radius: 6px;
+   font-size: 0.9rem;
+   font-weight: 500;
+   color: #333333;
+   transition: background 0.2s ease;
+   width: fit-content;
+}
+
+.fileAddButton:hover {
+   background: #f5f5f5;
+}
+
+.fileInput {
+   display: none;
+}
+
+.fileCount {
+   font-size: 0.85rem;
+   color: #999999;
+}
+
+.fileList {
+   display: flex;
+   flex-direction: column;
+   gap: 8px;
+   margin-top: 12px;
+}
+
+.fileItem {
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   background: #f9f9f9;
+   border: 1px solid #e0e0e0;
+   border-radius: 6px;
+   padding: 12px 16px;
+}
+
+.fileInfo {
+   display: flex;
+   align-items: center;
+   gap: 12px;
+   min-width: 0;
+   flex: 1;
+}
+
+.fileIndex {
+   font-size: 0.8rem;
+   color: #999999;
+   width: 24px;
+   flex-shrink: 0;
+}
+
+.fileName {
+   font-size: 0.9rem;
+   color: #333333;
+   white-space: nowrap;
+   overflow: hidden;
+   text-overflow: ellipsis;
+   min-width: 0;
+}
+
+.fileSize {
+   font-size: 0.8rem;
+   color: #999999;
+   margin-left: 8px;
+   flex-shrink: 0;
+}
+
+.removeButton {
+   background: transparent;
+   border: none;
+   color: #dc2626;
+   cursor: pointer;
+   padding: 4px 8px;
+   border-radius: 4px;
+   font-size: 1.2rem;
+   transition: background 0.2s ease;
+}
+
+.removeButton:hover {
+   background: #fee2e2;
+}
+
+.submitSection {
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+}
+
+.submitButton {
+   background: #56D6E4;
+   color: #1a1a1a;
+   border: none;
+   padding: 10px 24px;
+   border-radius: 6px;
+   font-size: 0.9rem;
+   font-weight: 600;
+   cursor: pointer;
+   transition: background 0.2s ease;
+}
+
+.submitButton:hover {
+   background: #36b8c6;
+}
+
+.statusMessage {
+   font-size: 0.9rem;
+   color: #666666;
+}
+
+@media (max-width: 768px) {
+   .formGrid {
+      grid-template-columns: 1fr;
+   }
+}
