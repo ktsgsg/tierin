@@ -33,8 +33,8 @@ export default async function PreviewPage(props: any) {
                             <li key={resource} className={styles.resource_item}>
                                 <iframe
                                     src={resourceUrl}
-                                    width="800"
-                                    height="600"
+                                    width="1200"
+                                    height="900"
                                     title="PDF Resource"
                                 ></iframe>
                             </li>
