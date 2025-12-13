@@ -9,3 +9,28 @@
     display: flex;
     flex-direction: column;
 }
+
+.resource_item img {
+    width: 80%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+.pdf_container {
+    position: relative;
+    width: 90%;
+    padding-bottom: 75%; /* 4:3 */
+    height: 0;
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+.pdf_container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+}

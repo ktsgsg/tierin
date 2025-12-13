@@ -15,7 +15,7 @@ export default async function PreviewPage(props: any) {
         }
     )
     const data = await response.json();
-    const resourceBase = 'http://localhost:3000/storage/resources/';
+    const resourceBase = '/storage/resources/';
 
     return (
         <div>
@@ -25,18 +25,18 @@ export default async function PreviewPage(props: any) {
                     if (resource.endsWith('.jpeg') || resource.endsWith('.jpg') || resource.endsWith('.png')) {
                         return (
                             <li key={resource} className={styles.resource_item}>
-                                <img src={resourceUrl} alt={`Resource`} width={800} />
+                                <img src={resourceUrl} alt={`Resource`} />
                             </li>
                         );
                     } else if (resource.endsWith('.pdf')) {
                         return (
                             <li key={resource} className={styles.resource_item}>
-                                <iframe
-                                    src={resourceUrl}
-                                    width="1200"
-                                    height="900"
-                                    title="PDF Resource"
-                                ></iframe>
+                                <div className={styles.pdf_container}>
+                                    <iframe
+                                        src={resourceUrl}
+                                        title="PDF Resource"
+                                    ></iframe>
+                                </div>
                             </li>
                         );
                     } else {
