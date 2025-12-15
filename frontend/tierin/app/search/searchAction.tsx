@@ -99,7 +99,7 @@ export async function searchAction(formData: FormData) {
          const view_item: PreviewItem = {
             contents_id: item.contents_id,
             title: item.title,
-            url: "/preview/contents/" + item.contents_id,
+            url: "/preview/?contents_id=" + item.contents_id,
             subject: subjectdata.name,
             teacher: subjectdata.teachers.replace(/　/g, " "), // 全角スペースを半角に変換
             year: item.year,

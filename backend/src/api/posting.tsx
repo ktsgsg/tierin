@@ -30,19 +30,14 @@ posting.post('/', async (c) => {
    const files = formData.getAll("file") as File[];// ファイルをすべて取得
    // アップロードされたファイルを保存
    files.forEach(file => {
-<<<<<<< HEAD
       const resource = crypt.randomUUID() + '.' + file.name.split('.').pop();
       // 元のファイル名も保存
       const filename = file.name;
       filenames.push(filename);
 
-      fs.writeFile("./storage/resources/"+resource,file.stream());
+      fs.writeFile("./storage/resources/" + resource, file.stream());
       resources.push(resource);
-=======
-      const filename = crypt.randomUUID() + "_" + file["name"];
-      fs.writeFile("./storage/resources/" + filename, file.stream());
-      resources.push(filename);
->>>>>>> develop
+
    });
 
    // フォームデータを取得して処理する
@@ -54,14 +49,9 @@ posting.post('/', async (c) => {
       'year': formData.get("year"), // 年度
       'posting_time': new Date().toISOString(), // 投稿時間 現在時刻
       'contents_type': formData.get("contents_type"), // このコンテンツの種類
-<<<<<<< HEAD
       'extensions': contentExtensions, // アップロードされたファイルの拡張子リスト
       'resources': resources, // アップロードされたファイルの情報(実際のパス)
       'filenames': filenames // 元のファイル名リスト
-=======
-      'extensions': uniqueExtensions, // アップロードされたファイルの拡張子リスト
-      'resources': resources // アップロードされたファイルの情報
->>>>>>> develop
    }
 
    //contentをDBに保存する
