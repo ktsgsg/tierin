@@ -127,3 +127,25 @@
 .searchInput::placeholder {
     color: rgba(255, 255, 255, 0.6);
 }
+
+.logoutButton {
+    background: #ff6b6b;
+    color: #ffffff;
+    border: none;
+    padding: 3px 9px;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-left: auto;
+    font-size: 0.8rem;
+}
+
+.logoutButton:hover {
+    background: #ee5a52;
+    box-shadow: 0 2px 8px rgba(255, 107, 107, 0.3);
+}
+
+.logoutButton:active {
+    transform: scale(0.98);
+}
