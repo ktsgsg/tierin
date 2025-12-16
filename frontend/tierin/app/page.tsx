@@ -4,7 +4,7 @@ import styles from './page.module.css';
 
 export default function Home() {
   return (
-    <div className={styles.container}>
+    <div className={`${styles.container} with-header`}>
       <Header />
       <h1>Tierinへようこそ！</h1>
       <h1>気になる情報を検索しよう！</h1>

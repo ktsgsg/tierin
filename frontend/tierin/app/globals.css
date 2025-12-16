@@ -26,7 +26,12 @@ body {
   padding-top: 110px;
 }
 
-/* Auth pages shared styles */
+/* Pages with header need padding to account for fixed header */
+.with-header {
+  padding-top: 0;
+}
+
+/* Auth pages remove header padding */
 .auth-page {
   min-height: 100vh;
   display: flex;
@@ -34,6 +39,8 @@ body {
   justify-content: center;
   background: linear-gradient(135deg, #e8ecf1 0%, #f5f5f5 100%);
   padding: 24px;
+  padding-top: 24px;
+  margin-top: -110px;
 }
 
 .auth-card {

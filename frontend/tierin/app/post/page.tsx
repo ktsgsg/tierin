@@ -50,7 +50,7 @@ export default function PostingTestPage() {
   }
 
   return (
-    <div className="with-header" style={{ paddingTop: 32, paddingBottom: 48, background: "#f5f5f5" }}>
+    <div className="with-header" style={{ paddingBottom: 48, background: "#f5f5f5" }}>
       <Header />
       <main style={{ width: '100%', maxWidth: '1200px', margin: '0 auto', padding: '0 24px' }}>
         <div className="auth-card">
