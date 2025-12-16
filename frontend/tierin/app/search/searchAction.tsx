@@ -71,7 +71,7 @@ export async function searchAction(formData: FormData) {
    const cookie = cookieStore.get('access_token') ? `access_token=${cookieStore.get('access_token')?.value}; refresh_token=${cookieStore.get('refresh_token')?.value}` : '';
 
    // バックエンドAPIに検索リクエストを送信
-   const response = await fetch('http://172.30.0.2:3000/api/search?' + params.toString(), {
+   const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://api:3000'}/api/search?` + params.toString(), {
       headers: {
          'Content-Type': 'application/json',
          'Cookie': cookie,
@@ -129,7 +129,7 @@ export async function searchAction(formData: FormData) {
  */
 async function getSubject(subject_code: string, cookie: string): Promise<subjectData> {
    // バックエンドAPIから教科情報を取得
-   const response = await fetch('http://172.30.0.2:3000/api/database/subject?code=' + subject_code, {
+   const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://api:3000'}/api/database/subject?code=` + subject_code, {
       headers: {
          'Content-Type': 'application/json',
          'Cookie': cookie,

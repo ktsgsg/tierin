@@ -23,7 +23,7 @@ export const getSubjectsCode = async (query: query) => {
 
    console.log(query);
 
-   const response = await fetch("http://api:3000/api/database/subject?" + new URLSearchParams({
+   const response = await fetch(process.env.NEXT_PUBLIC_API_URL + "/api/database/subject?" + new URLSearchParams({
       name: query.name,
       teachers: query.teacher
    }), {

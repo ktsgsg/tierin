@@ -12,7 +12,7 @@ const nextConfig: NextConfig = {
         // 外部（ブラウザ）からリクエストされるパス
         source: '/storage/resources/:path*',
         // 内部のHono APIサーバーのURL
-        destination: 'http://api:3000/storage/resources/:path*',
+        destination: process.env.NEXT_PUBLIC_API_URL + '/storage/resources/:path*',
       }
     ];
   },

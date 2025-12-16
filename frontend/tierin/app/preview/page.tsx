@@ -15,7 +15,7 @@ export default async function PreviewPage(props: any) {
     const cookie = cookieStore.get('access_token') ? `access_token=${cookieStore.get('access_token')?.value}; refresh_token=${cookieStore.get('refresh_token')?.value}` : '';
 
     const response = await fetch(
-        `http://api:3000/api/preview/contents?contents_id=${contents_id}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/api/preview/contents?contents_id=${contents_id}`,
         {
             cache: 'no-store',
             //cookieが必要なので追記

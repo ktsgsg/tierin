@@ -13,7 +13,7 @@ export async function loginAction(formData: FormData) {
 
    try {
       // バックエンドAPIにログインリクエストを送信
-      const response = await fetch('http://172.30.0.2:3000/api/signin/', {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://api:3000'}/api/signin/`, {
          method: 'POST',
          headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
