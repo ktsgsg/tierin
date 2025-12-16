@@ -3,6 +3,7 @@
 import { FormEvent, useEffect, useState, useTransition } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { searchAction } from "./searchAction";
+import { favAction } from "./favAction";
 import { Header } from "@/app/components/Header";
 import styles from "./search.module.css";
 
@@ -41,7 +42,6 @@ export default function SearchPage() {
    // 初期表示用の空配列
    const previewResults: PreviewItem[] = [];
 
-
    // 検索結果の状態管理
    const [results, setResults] = useState<PreviewItem[]>(previewResults);
    const [sortOption, setSortOption] = useState<SortOption>("likes");
@@ -62,23 +62,20 @@ export default function SearchPage() {
    const handleFavUpdate = async (contentsId: string) => {
       setFavPending((prev) => ({ ...prev, [contentsId]: true }));
       try {
-         const params = new URLSearchParams({ isIncrement: "true", contents_id: contentsId });
-         const res = await fetch(`http://localhost:3000/api/fav/update?${params.toString()}`, {
-            method: "GET",
-            credentials: "include",
-         });
+         const isIncrement = "true";
+         const res = await favAction(contentsId, isIncrement);
 
-         if (!res.ok) {
+         if (!res.error) {
             throw new Error(`Failed to update fav: ${res.status}`);
          }
-
-         const data = await res.json();
+         
+         const data = await res;
          const nextLikes = typeof data?.contents?.stars === "number" ? data.contents.stars : null;
 
          setResults((prev) => {
             const updated = prev.map((item) =>
                item.contents_id === contentsId
-                  ? { ...item, likes: nextLikes ?? item.likes + 1 }
+                  ? { ...item, likes: nextLikes ?? item.likes + (isIncrement === "true" ? 1 : -1) }
                   : item
             );
             return applySort(updated, sortOption);
