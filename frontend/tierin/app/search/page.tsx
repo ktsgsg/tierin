@@ -45,6 +45,7 @@ export default function SearchPage() {
    // 検索結果の状態管理
    const [results, setResults] = useState<PreviewItem[]>(previewResults);
    const [sortOption, setSortOption] = useState<SortOption>("likes");
+   const [favPending, setFavPending] = useState<Record<string, boolean>>({});
 
    const applySort = (items: PreviewItem[], sort: SortOption) => {
       const sorted = [...items];
@@ -56,6 +57,37 @@ export default function SearchPage() {
    const handleSortChange = (nextSort: SortOption) => {
       setSortOption(nextSort);
       setResults((prev) => applySort(prev, nextSort));
+   };
+
+   const handleFavUpdate = async (contentsId: string) => {
+      setFavPending((prev) => ({ ...prev, [contentsId]: true }));
+      try {
+         const params = new URLSearchParams({ isIncrement: "true", contents_id: contentsId });
+         const res = await fetch(`http://localhost:3000/api/fav/update?${params.toString()}`, {
+            method: "GET",
+            credentials: "include",
+         });
+
+         if (!res.ok) {
+            throw new Error(`Failed to update fav: ${res.status}`);
+         }
+
+         const data = await res.json();
+         const nextLikes = typeof data?.contents?.stars === "number" ? data.contents.stars : null;
+
+         setResults((prev) => {
+            const updated = prev.map((item) =>
+               item.contents_id === contentsId
+                  ? { ...item, likes: nextLikes ?? item.likes + 1 }
+                  : item
+            );
+            return applySort(updated, sortOption);
+         });
+      } catch (error) {
+         console.error("Failed to update fav", error);
+      } finally {
+         setFavPending((prev) => ({ ...prev, [contentsId]: false }));
+      }
    };
 
    /**
@@ -103,9 +135,14 @@ export default function SearchPage() {
             >
                {item.type === "past" ? "過去問" : "授業資料"}
             </span>
-            <span className={styles.rating}>
-               ★<span className={styles.ratingCount}>{item.likes}</span>
-            </span>
+            <span className={styles.rating}><button
+               type="button"
+               className="like-button"
+               disabled={favPending[item.contents_id]}
+               onClick={() => handleFavUpdate(item.contents_id)}
+            >
+               {favPending[item.contents_id] ? "更新中..." : "★" + item.likes}
+            </button></span>
          </div>
       </div>
    );

@@ -12,13 +12,13 @@ fav.get('/update', async (c) => {
     const idParam = c.req.query('contents_id');
     
     if (!idParam) {
-        return c.json({ error: "idパラメータが必要です。" }, 400);
+        return c.json({ error: "contents_idパラメータが必要です。" }, 400);
     }
     if (!isIncrement) {
         return c.json({ error: "isIncrementパラメータが必要です。" }, 400);
     }
 
-    let stars = await supabase.from('contents').select('stars').eq('id', idParam).single();
+    let stars = await supabase.from('contents').select('stars').eq('contents_id', idParam).single();
 
     if(stars.error) {
         console.error('Error fetching stars: ', stars.error);
@@ -31,7 +31,7 @@ fav.get('/update', async (c) => {
     const { error: updateError } = await supabase
         .from('contents')
         .update({ stars: result })
-        .eq('id', idParam);
+        .eq('contents_id', idParam);
 
     if (updateError) {
         console.error('Error updating:', updateError);
@@ -41,7 +41,7 @@ fav.get('/update', async (c) => {
     const { data: contents, error: fetchError } = await supabase
         .from('contents')
         .select('*')
-        .eq('id', idParam)
+        .eq('contents_id', idParam)
         .single();
 
     if (fetchError) {
