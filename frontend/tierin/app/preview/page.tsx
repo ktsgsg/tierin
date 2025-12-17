@@ -1,6 +1,7 @@
 import { Header } from "@/app/components/Header";
 import { getPreviewData } from './previewAction';
 import { PreviewContent } from './PreviewContent';
+import { PreviewError } from './PreviewError';
 
 export default async function PreviewPage(props: any) {
     const searchParams = await props.searchParams;
@@ -14,7 +15,16 @@ export default async function PreviewPage(props: any) {
     const data = await getPreviewData(contents_id);
 
     if (!data) {
-        return <p>Failed to load preview data</p>;
+        return (
+            <div className="with-header" style={{ paddingBottom: 48, paddingTop: 32, background: "#f5f5f5", minHeight: "100vh" }}>
+                <Header />
+                <main style={{ width: '100%', maxWidth: '1200px', margin: '0 auto', padding: '0 24px' }}>
+                    <div className="auth-card">
+                        <PreviewError />
+                    </div>
+                </main>
+            </div>
+        );
     }
 
     return (

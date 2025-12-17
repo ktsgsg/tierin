@@ -20,7 +20,7 @@ export function PreviewContent({ data }: PreviewContentProps) {
 
    const filenames = data.metadata.filenames;
 
-   console.log('Rendering resources:', data);
+   //console.log('Rendering resources:', data);
    return (
       <div className={styles.preview_container}>
          {data.metadata.resources.map((resource: string, index: number) => {

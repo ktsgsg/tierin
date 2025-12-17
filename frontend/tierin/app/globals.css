@@ -51,6 +51,7 @@ body {
   border-radius: 8px;
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
   border: 1px solid #e0e0e0;
+  margin: 0 auto;
 }
 
 .auth-title {
