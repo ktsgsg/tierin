@@ -60,7 +60,8 @@ export const Header = ({ userEmail = "ユーザー" }: HeaderProps) => {
             <div className={styles.headerTop}>
                 <div className={styles.logoArea}>
                     <div className={styles.logo}>
-                        🔗 Tierin
+                        <img src="/favicon.ico" alt="Tierin" className={styles.logoIcon} />
+                        Tierin
                     </div>
                     <div className={styles.user_id}>
                         {email} ログイン中
