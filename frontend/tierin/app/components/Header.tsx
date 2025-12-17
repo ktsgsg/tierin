@@ -17,6 +17,7 @@ const navItems: NavItem[] = [
     { name: 'ホーム', href: '/' },
     { name: '詳細検索', href: '/search' },
     { name: '投稿', href: '/post' },
+    { name: 'アカウント', href: '/accounts' },
     { name: 'FAQ', href: '/faq' },
 ];
 
