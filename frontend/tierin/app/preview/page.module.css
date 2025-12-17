@@ -1,3 +1,82 @@
+.preview_container {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.resource_card {
+    background: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 16px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    transition: box-shadow 0.2s ease;
+}
+
+.resource_card:hover {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.filename {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin-bottom: 12px;
+    word-break: break-word;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #56D6E4;
+}
+
+.resource_content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.resource_item img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 6px;
+    max-width: 500px;
+}
+
+.pdf_container {
+    position: relative;
+    width: 100%;
+    padding-bottom: 75%;
+    /* 4:3 */
+    height: 0;
+    overflow: hidden;
+    border-radius: 6px;
+    max-width: 600px;
+}
+
+.pdf_container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+.download_link {
+    display: inline-block;
+    padding: 12px 24px;
+    background: #56D6E4;
+    color: #1a1a1a;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: 600;
+    transition: background 0.2s ease;
+    font-size: 0.95rem;
+}
+
+.download_link:hover {
+    background: #36b8c6;
+}
+
 .resource_list {
     list-style-type: none;
     margin-bottom: 20px;
@@ -8,29 +87,4 @@
     align-items: center;
     display: flex;
     flex-direction: column;
-}
-
-.resource_item img {
-    width: 80%;
-    height: auto;
-    display: block;
-    margin: 0 auto;
-}
-
-.pdf_container {
-    position: relative;
-    width: 90%;
-    padding-bottom: 75%; /* 4:3 */
-    height: 0;
-    margin: 0 auto;
-    overflow: hidden;
-}
-
-.pdf_container iframe {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border: none;
 }
