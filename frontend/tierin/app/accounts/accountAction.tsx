@@ -1,58 +1,63 @@
 'use server';
 
 import { cookies } from 'next/headers';
-
-export interface Resource {
-   id: number;
-   title: string;
-   subject: string;
-   year: number;
-   type: string;
-}
-
-export interface MyResource extends Resource {
-   likes: number;
-}
+import { SearchItem } from '../search/types';
 
 export interface AccountData {
    email: string;
-   likedResources: Resource[];
-   myResources: MyResource[];
+   likedResources: SearchItem[];
+   myResources: SearchItem[];
 }
 
-export async function getAccountData(): Promise<AccountData | null> {
-   // TODO: ここにAPI呼び出しを実装してください
-   // 例:
-   // const cookieStore = await cookies();
-   // const accessToken = cookieStore.get('access_token')?.value;
-   // 
-   // if (!accessToken) {
-   //    return null;
-   // }
-   //
-   // const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/account`, {
-   //    headers: {
-   //       'Cookie': `access_token=${accessToken}`
-   //    }
-   // });
-   //
-   // if (!response.ok) {
-   //    return null;
-   // }
-   //
-   // return await response.json();
-   const cookieStore = await cookies();
-   // 仮のダミーデータを返す
+const toSearchItem = (item: any): SearchItem => {
+   const contentsId = String(item?.contents_id ?? item?.id ?? '');
+   const extensions = Array.isArray(item?.extensions)
+      ? item.extensions
+      : typeof item?.extensions === 'string'
+         ? item.extensions.split(',').filter(Boolean)
+         : [];
+
    return {
-      email: 'example@ccmailg.meijo-u.ac.jp',
-      likedResources: [
-         { id: 1, title: '微分積分 中間試験 過去問', subject: '微分積分', year: 2024, type: '過去問' },
-         { id: 2, title: '線形代数 期末試験解答例', subject: '線形代数', year: 2023, type: '過去問' },
-         { id: 3, title: 'プログラミング基礎 講義資料', subject: 'プログラミング基礎', year: 2024, type: '授業資料' },
-      ],
-      myResources: [
-         { id: 1, title: '物理学実験 レポート例', subject: '物理学実験', year: 2024, type: '授業資料', likes: 12 },
-         { id: 2, title: '化学基礎 小テスト解答', subject: '化学基礎', year: 2024, type: 'その他', likes: 8 },
-      ],
+      contents_id: contentsId,
+      title: item?.title ?? '不明なタイトル',
+      url: `/preview/?contents_id=${contentsId}`,
+      subject: item?.subject ?? '不明',
+      teacher: item?.teacher ?? '不明',
+      year: Number(item?.year ?? 0),
+      type: (item?.contents_type ?? item?.type ?? 'past') as 'past' | 'lecture',
+      extensions,
+      likes: Number(item?.likes ?? item?.stars ?? 0),
    };
+};
+
+export async function getAccountData(): Promise<AccountData | null> {
+   // 認証用のCookieを取得
+   const cookieStore = await cookies();
+   const cookie = cookieStore.get('access_token')
+      ? `access_token=${cookieStore.get('access_token')?.value}; refresh_token=${cookieStore.get('refresh_token')?.value}`
+      : '';
+
+   const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL || 'http://api:3000'}/api/accounts/`,
+      {
+         cache: 'no-store',
+         headers: {
+            'Cookie': cookie,
+         },
+      }
+   );
+
+   if (!response.ok) {
+      return null;
+   }
+
+   const data = await response.json();
+   const liked = Array.isArray(data?.liked_contents) ? data.liked_contents.map(toSearchItem) : [];
+   const mine = Array.isArray(data?.contents) ? data.contents.map(toSearchItem) : [];
+   const accountData: AccountData = {
+      email: data.user.email ?? '',
+      myResources: mine,
+      likedResources: liked,
+   };
+   return accountData;
 }

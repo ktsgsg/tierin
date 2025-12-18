@@ -5,6 +5,8 @@ import AccountContent from './AccountContent';
 export default async function AccountPage() {
    const data = await getAccountData();
 
+   console.log(data);
+
    if (!data) {
       return (
          <div className="with-header" style={{ paddingBottom: 48, paddingTop: 32, background: "#f5f5f5", minHeight: "100vh" }}>

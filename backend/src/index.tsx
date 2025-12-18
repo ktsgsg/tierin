@@ -7,6 +7,7 @@ import { search } from './api/search.js'
 import { posting } from './api/posting.js'
 import { suggest } from './api/suggest.js'
 import { preview } from './api/preview.js'
+import { accounts } from './api/accounts.js'
 
 import path from 'path'
 import fs from 'fs'
@@ -92,6 +93,7 @@ app.route('/api/preview/', preview);
 app.route('/api/signup/', signup);
 app.route('/api/signin/', signin);
 app.route('/api/getsession/', getsession);
+app.route('/api/accounts/', accounts);
 
 serve({
   fetch: app.fetch,

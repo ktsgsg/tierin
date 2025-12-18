@@ -1,6 +1,7 @@
 'use client';
 
 import { AccountData } from './accountAction';
+import { SearchResultList } from '../search/SearchResultList';
 import styles from './page.module.css';
 
 interface AccountContentProps {
@@ -30,43 +31,16 @@ export default function AccountContent({ data }: AccountContentProps) {
             {/* いいねした資料リスト */}
             <div className={styles.accountSection}>
                <h2 className={styles.sectionTitle}>いいねした資料 ({data.likedResources.length}件)</h2>
-               <div className={styles.resourceList}>
-                  {data.likedResources.map((resource) => (
-                     <div key={resource.id} className={styles.resourceCard}>
-                        <div className={styles.resourceHeader}>
-                           <span className={styles.resourceTitle}>{resource.title}</span>
-                           <span className={styles.resourceType}>{resource.type}</span>
-                        </div>
-                        <div className={styles.resourceMeta}>
-                           <span>{resource.subject}</span>
-                           <span>{resource.year}年</span>
-                        </div>
-                     </div>
-                  ))}
-               </div>
+               <SearchResultList items={data.likedResources} />
             </div>
 
             {/* 投稿した資料リスト */}
             <div className={styles.accountSection}>
                <h2 className={styles.sectionTitle}>投稿した資料 ({data.myResources.length}件)</h2>
-               <div className={styles.resourceList}>
-                  {data.myResources.map((resource) => (
-                     <div key={resource.id} className={styles.resourceCard}>
-                        <div className={styles.resourceHeader}>
-                           <span className={styles.resourceTitle}>{resource.title}</span>
-                           <span className={styles.resourceType}>{resource.type}</span>
-                        </div>
-                        <div className={styles.resourceMeta}>
-                           <span>{resource.subject}</span>
-                           <span>{resource.year}年</span>
-                           <span className={styles.likes}>{resource.likes}</span>
-                        </div>
-                     </div>
-                  ))}
-               </div>
+               <SearchResultList items={data.myResources} />
             </div>
 
-            {/* アカウント削除ボタン */}
+            {/* {アカウント削除ボタン
             <div className={styles.accountSection}>
                <h2 className={styles.sectionTitle}>危険な操作</h2>
                <div className={styles.dangerZone}>
@@ -80,7 +54,7 @@ export default function AccountContent({ data }: AccountContentProps) {
                      アカウントを削除
                   </button>
                </div>
-            </div>
+            </div>} */}
          </div>
       </main>
    );
