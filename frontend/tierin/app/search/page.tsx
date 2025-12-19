@@ -4,22 +4,8 @@ import { FormEvent, useEffect, useState, useTransition } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { searchAction } from "./searchAction";
 import { Header } from "@/app/components/Header";
-import styles from "./search.module.css";
-
-/**
- * 検索結果アイテムの型定義
- */
-type PreviewItem = {
-   contents_id: string; // コンテンツID
-   title: string; // 資料タイトル
-   url: string; // 資料へのリンクURL
-   subject: string; // 教科名
-   teacher: string; // 教員名
-   year: number; // 作成年度
-   type: "past" | "lecture"; // 種別（過去問または授業資料）
-   extensions: string[]; // 含まれるファイル拡張子の配列
-   likes: number; // いいね数
-};
+import { SearchItem } from "./types";
+import { SearchResultList } from "./SearchResultList";
 
 type SortOption = "likes" | "aiueo";
 
@@ -39,14 +25,14 @@ export default function SearchPage() {
    const yearOptions = Array.from({ length: currentYear - 2008 + 1 }, (_, idx) => currentYear - idx);
 
    // 初期表示用の空配列
-   const previewResults: PreviewItem[] = [];
+   const previewResults: SearchItem[] = [];
 
 
    // 検索結果の状態管理
-   const [results, setResults] = useState<PreviewItem[]>(previewResults);
+   const [results, setResults] = useState<SearchItem[]>(previewResults);
    const [sortOption, setSortOption] = useState<SortOption>("likes");
 
-   const applySort = (items: PreviewItem[], sort: SortOption) => {
+   const applySort = (items: SearchItem[], sort: SortOption) => {
       const sorted = [...items];
       if (sort === "likes") return sorted.sort((a, b) => b.likes - a.likes);
       if (sort === "aiueo") return sorted.sort((a, b) => a.title.localeCompare(b.title, "ja"));
@@ -65,7 +51,7 @@ export default function SearchPage() {
    const runSearch = (formData: FormData) => {
       startTransition(() => {
          searchAction(formData).then((data) => {
-            const items = (data.items as PreviewItem[])?.filter(Boolean) ?? [];
+            const items = (data.items as SearchItem[])?.filter(Boolean) ?? [];
             setResults(applySort(items, sortOption));
             console.log('Search action returned items:', data.items);
          }).catch((err) => {
@@ -74,51 +60,6 @@ export default function SearchPage() {
          });
       });
    };
-
-   /**
-    * 検索結果カード1件分を描画する関数
-    * @param item - 表示する検索結果アイテム
-    * @param idx - 配列内のインデックス（keyとして使用）
-    */
-   const renderResultCard = (item: PreviewItem, idx: number) => (
-      <div key={idx} className={styles.resultCard}>
-         <div className={styles.resultTitle}>
-            <a href={item.url} className="auth-link" target="_blank" rel="noreferrer">
-               {item.title}
-            </a>
-         </div>
-         <div className={styles.resultMeta}>
-            <span>教科: {item.subject}</span>
-            <span>担当: {item.teacher}</span>
-            <span>作成年: {item.year}</span>
-         </div>
-         <div className={styles.extList}>
-            {item.extensions.map((ext) => (
-               <span key={ext} className={styles.extPill}>
-                  .{ext}
-               </span>
-            ))}
-            <span
-               className={`${styles.badge} ${item.type === "past" ? styles.badgePast : styles.badgeLecture}`}
-            >
-               {item.type === "past" ? "過去問" : "授業資料"}
-            </span>
-            <span className={styles.rating}>
-               ★<span className={styles.ratingCount}>{item.likes}</span>
-            </span>
-         </div>
-      </div>
-   );
-
-   /**
-    * 検索結果一覧を描画する関数
-    * @param items - 表示する検索結果アイテムの配列
-    */
-   const renderResults = (items: PreviewItem[]) => (
-      <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-         {items.map((item, idx) => renderResultCard(item, idx))}
-      </div>
-   );
 
    /**
     * 検索フォーム送信時のハンドラ
@@ -289,7 +230,7 @@ export default function SearchPage() {
                   <h2 style={{ fontSize: "1.1rem", fontWeight: "700", color: "#1a1a1a", marginBottom: "16px", marginTop: 0 }}>
                      {results.length > 0 ? `検索結果（${results.length}件）` : "検索結果"}
                   </h2>
-                  {results.length > 0 ? renderResults(results) : <div style={{ padding: "40px 20px", textAlign: "center", color: "#999999" }}>検索条件に合う資料が見つかりませんでした</div>}
+                  {results.length > 0 ? <SearchResultList items={results} /> : <div style={{ padding: "40px 20px", textAlign: "center", color: "#999999" }}>検索条件に合う資料が見つかりませんでした</div>}
                </div>
             </div>
          </div>

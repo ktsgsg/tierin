@@ -1,46 +1,7 @@
 "use server";
 
 import { cookies } from 'next/headers'
-
-/**
- * フロントエンドで表示する検索結果アイテムの型
- */
-type PreviewItem = {
-   contents_id: string; // コンテンツID
-   title: string; // 資料タイトル
-   url: string; // 資料へのリンクURL
-   subject: string | "不明"; // 教科名（取得できない場合は"不明"）
-   teacher: string | "不明"; // 教員名（取得できない場合は"不明"）
-   year: number; // 作成年度
-   type: "past" | "lecture"; // 種別（過去問または授業資料）
-   extensions: string[]; // 含まれるファイル拡張子の配列
-   likes: number; // いいね数
-};
-
-/**
- * バックエンドAPIから返される検索結果の型
- */
-type SearchResult = {
-   title: string; // 資料タイトル
-   contents_id: string; // コンテンツID
-   subject_code: string; // 教科コード
-   year: number; // 作成年度
-   contents_type: "past" | "lecture"; // 種別
-   extensions: string; // 拡張子（カンマ区切り文字列）
-   stars: number; // いいね数
-};
-
-/**
- * 教科データの型
- */
-type subjectData = {
-   id: string; // 教科ID
-   code: string; // 教科コード
-   name: string; // 教科名
-   place_and_time: string; // 場所と時間
-   teachers: string; // 教員名
-   url: string; // 教科URL
-};
+import { SearchItem, SearchResultApi, SubjectData } from './types';
 
 /**
  * 資料検索を実行するサーバーアクション
@@ -90,13 +51,12 @@ export async function searchAction(formData: FormData) {
    console.log('params:', params.toString());
 
    // 各検索結果を非同期で変換（教科情報を取得してフロントエンド用の形式に整形）
-   const itemsPromise = await data.map(async (item: SearchResult) => {
+   const itemsPromise = await data.map(async (item: SearchResultApi) => {
       // 教科コードから教科情報を取得
-      const subjectdata: subjectData = await getSubject(item.subject_code, cookie);
+      const subjectdata: SubjectData = await getSubject(item.subject_code, cookie);
       if (subjectdata) {
-         // 教科情報が取得できなかったらパス
          // フロントエンド用のデータ形式に変換
-         const view_item: PreviewItem = {
+         const view_item: SearchItem = {
             contents_id: item.contents_id,
             title: item.title,
             url: "/preview/?contents_id=" + item.contents_id,
@@ -111,9 +71,9 @@ export async function searchAction(formData: FormData) {
       }
    });
    // 全ての非同期処理が完了するのを待つ
-   const items: PreviewItem[] = await Promise.all(itemsPromise);
+   const items: SearchItem[] = await Promise.all(itemsPromise);
    // undefinedが混入する可能性があるため除去
-   const filteredItems = items.filter((item): item is PreviewItem => item !== undefined);
+   const filteredItems = items.filter((item): item is SearchItem => item !== undefined);
    return {
       items: filteredItems,
    };
@@ -127,7 +87,7 @@ export async function searchAction(formData: FormData) {
  * @param cookie - 認証用Cookie
  * @returns 教科データ
  */
-async function getSubject(subject_code: string, cookie: string): Promise<subjectData> {
+async function getSubject(subject_code: string, cookie: string): Promise<SubjectData> {
    // バックエンドAPIから教科情報を取得
    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://api:3000'}/api/database/subject?code=` + subject_code, {
       headers: {
