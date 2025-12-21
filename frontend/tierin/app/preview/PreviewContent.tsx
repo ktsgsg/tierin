@@ -29,7 +29,17 @@ export function PreviewContent({ data }: PreviewContentProps) {
 
             return (
                <div key={resource} className={styles.resource_card}>
-                  <div className={styles.filename}>{filename}</div>
+                  <div className={styles.card_header}>
+                     <div className={styles.filename}>{filename}</div>
+                     <a 
+                        href={resourceUrl} 
+                        download={filename}
+                        className={styles.download_button}
+                        title="ダウンロード"
+                     >
+                        📥 ダウンロード
+                     </a>
+                  </div>
                   <div className={styles.resource_content}>
                      {resource.endsWith('.jpeg') || resource.endsWith('.jpg') || resource.endsWith('.png') ? (
                         <img src={resourceUrl} alt={filename} />
@@ -41,9 +51,9 @@ export function PreviewContent({ data }: PreviewContentProps) {
                            ></iframe>
                         </div>
                      ) : (
-                        <a href={resourceUrl} target="_blank" rel="noopener noreferrer" className={styles.download_link}>
-                           📥 {filename}をダウンロード
-                        </a>
+                        <div className={styles.file_icon}>
+                           📄 このファイルはプレビューできません
+                        </div>
                      )}
                   </div>
                </div>
