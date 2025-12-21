@@ -25,18 +25,7 @@ services:
         ipv4_address: 172.30.0.3 # コンテナのIPアドレスを固定
     volumes:
       - ./frontend/tierin:/app
-  tunnel:
-    image: cloudflare/cloudflared
-    restart: unless-stopped
-    command:
-      - tunnel
-      - --no-autoupdate
-      - run
-    environment:
-      - TUNNEL_TOKEN=${CLOUDFLARE_TUNNEL_TOKEN}
-    networks:
-      app-network:
-        ipv4_address: 172.30.0.4 # コンテナのIPアドレスを固定
+    #tunnelは削除
 
 networks:
   app-network:

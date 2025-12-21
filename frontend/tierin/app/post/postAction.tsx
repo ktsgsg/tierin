@@ -2,6 +2,7 @@
 import { getSubjectsCode } from '@/app/components/suggest';
 import { GetEmailHeader } from '@/app/components/headerAction';
 import { cookies } from 'next/headers';
+import { getAuthCookie } from '@/lib/searchUtils';
 
 export async function postAction(formData: FormData) {
   const files = formData.getAll("file") as File[];
@@ -24,9 +25,8 @@ export async function postAction(formData: FormData) {
   files.forEach((file) => postData.append("file", file));
 
 
-  // 認証用のCookieを取得
-  const cookieStore = await cookies()
-  const cookie = cookieStore.get('access_token') ? `access_token=${cookieStore.get('access_token')?.value}; refresh_token=${cookieStore.get('refresh_token')?.value}` : '';
+  // 共通関数を使って認証用のCookieを取得
+  const cookie = await getAuthCookie();
   console.log("Posting data:", postData);
   // バックエンドAPIに検索リクエストを送信
   const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://api:3000'}/api/posting/`, {

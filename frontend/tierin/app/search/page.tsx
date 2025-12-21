@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useEffect, useState, useTransition } from "react";
+import { FormEvent, Suspense, useEffect, useState, useTransition } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { searchAction } from "./searchAction";
 import { Header } from "@/app/components/Header";
@@ -13,6 +13,14 @@ type SortOption = "likes" | "aiueo";
  * 資料検索ページ
  */
 export default function SearchPage() {
+   return (
+      <Suspense fallback={<div style={{ padding: "40px 24px", textAlign: "center" }}>読み込み中...</div>}>
+         <SearchPageContent />
+      </Suspense>
+   );
+}
+
+function SearchPageContent() {
    // ルーティング操作用
    const router = useRouter();
    // URLクエリパラメータ取得用

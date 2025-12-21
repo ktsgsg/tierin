@@ -3,6 +3,7 @@ import { SupabaseClient } from '@supabase/supabase-js'
 import type { Context, MiddlewareHandler } from 'hono'
 import { env } from 'hono/adapter'
 import { setCookie, getCookie } from 'hono/cookie'
+import { get } from 'node:https'
 
 /**
  * Hono Context に Supabase クライアントを格納するためのモジュール拡張
@@ -74,20 +75,44 @@ export const supabaseMiddleware = (): MiddlewareHandler => {
 
       // サインアップ・サインインエンドポイントはセッション検証をスキップ
       if (c.req.path === '/api/signup/' || c.req.path === '/api/signin/') {
-         await next()
-         return
+         await next();
       }
+
+      const access_token = getCookie(c, 'access_token');
+      const refresh_token = getCookie(c, 'refresh_token');
 
       // Cookie から access_token を取得してユーザー情報を検証
-      const { data, error } = await supabase.auth.getUser(getCookie(c, 'access_token'));
+      if (access_token) {
+         const access_token = getCookie(c, 'access_token');
+         const { data, error } = await supabase.auth.getUser(access_token);
+         // ユーザー取得エラー時の処理
+         if (error) {
+            console.error('Error getting user:', error.message);
+            return c.json({ error: 'Unauthorized' }, 401);
+         }
+         c.set('email', data.user.email);
+         await next();
+      } else {
+         if (refresh_token) {
+            console.log("access_token is empty but refreshable.")
+            const { data, error } = await supabase.auth.refreshSession({
+               refresh_token
+            });
+            if (error || !data?.session) {
+               return c.json({ error: 'Unauthorized' }, 401);
+            }
+            const { access_token: newAccess, refresh_token: newRefresh, expires_at } = data.session;
 
-      // ユーザー取得エラー時の処理
-      if (error) {
-         console.error('Error getting user:', error.message);
-         return c.json({ error: 'Unauthorized' }, 401);
+            setCookie(c, 'access_token', newAccess, {
+               expires: expires_at ? new Date(expires_at * 1000) : undefined,
+            });
+            setCookie(c, 'refresh_token', newRefresh);
+            if (c.req.path === '/api/getsession/') {
+               return c.json(data.session);
+            }
+            await next();
+         }
       }
-
-      // 次のミドルウェア・ハンドラーへ
-      await next()
+      return c.json({ error: 'Unauthorized' }, 401);
    }
 }

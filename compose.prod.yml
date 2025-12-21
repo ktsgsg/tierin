@@ -1,0 +1,31 @@
+services:
+  api:
+    build: ./backend
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+    command: sh -c "npm run start"
+    volumes:
+      - ./backend:/app
+    networks:
+      app-network:
+        ipv4_address: 172.30.0.2
+  frontend:
+    build:
+      context: ./frontend/tierin/
+      dockerfile: Dockerfile.prod
+    ports:
+      - "8080:3000"
+    networks:
+      app-network:
+        ipv4_address: 172.30.0.3
+
+networks:
+  app-network:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.30.0.0/24

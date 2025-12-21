@@ -1,6 +1,7 @@
 'use server';
 
 import { cookies } from 'next/headers';
+import { getAuthCookie } from '@/lib/searchUtils';
 
 export type PreviewData = {
    metadata: {
@@ -21,11 +22,8 @@ export async function getPreviewData(contents_id: string): Promise<PreviewData |
    }
 
    try {
-      // 認証用のCookieを取得
-      const cookieStore = await cookies();
-      const cookie = cookieStore.get('access_token')
-         ? `access_token=${cookieStore.get('access_token')?.value}; refresh_token=${cookieStore.get('refresh_token')?.value}`
-         : '';
+      // 共通関数を使って認証用のCookieを取得
+      const cookie = await getAuthCookie();
 
       const response = await fetch(
          `${process.env.NEXT_PUBLIC_API_URL || 'http://api:3000'}/api/preview/contents?contents_id=${contents_id}`,
