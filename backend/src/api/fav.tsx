@@ -4,7 +4,7 @@ import { useSupabase } from '../hooks/supabase/useSupabase.js';
 
 export const fav = new Hono()
 
-fav.get('/update', async (c) => {
+fav.get('/', async (c) => {
     const supabase = useSupabase().supabase;
     const isIncrement = c.req.query('isIncrement');
     const idParam = c.req.query('contents_id');
@@ -25,7 +25,7 @@ fav.get('/update', async (c) => {
 
     let result = Number(stars.data?.stars ?? 0) + (isIncrement === 'true' ? 1 : -1);
 
-    // Update stars (fix column name if needed)
+    // starsの更新
     const { error: updateError } = await supabase
         .from('contents')
         .update({ stars: result })
@@ -46,24 +46,5 @@ fav.get('/update', async (c) => {
         return c.json({ error: "データ取得に失敗しました。" }, 500);
     }
 
-    return c.json({ success: true, isIncrement: isIncrement === 'true', contents });
+    return c.json({ ok: true, isIncrement: isIncrement === 'true', contents });
 });
-
-fav.get('/', (c) => {
-    return c.html(
-        <body>
-            <h1>Fav Test Page</h1>
-            <p>This is a test page for fav functionality.</p>
-            <form method="get" action="/api/fav/update">
-                <label for="isIncrement">isON:</label><br />
-                <input type="radio" id="isIncrement" name="isIncrement" value="true" checked />
-                <label for="isIncrement">ON</label>
-                <input type="radio" id="isIncrement" name="isIncrement" value="false" />
-                <label for="isIncrement">OFF</label><br />
-                <label for="contents_id">ID:</label>
-                <input type="text" id="contents_id" name="contents_id" required /><br />
-                <input type="submit" value="Submit" />
-            </form>
-        </body>
-    );
-})

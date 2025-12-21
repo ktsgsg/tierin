@@ -64,18 +64,19 @@ export default function SearchPage() {
       try {
          const isIncrement = "true";
          const res = await favAction(contentsId, isIncrement);
+         console.log("favAction result:", res);
 
-         if (!res.error) {
-            throw new Error(`Failed to update fav: ${res.status}`);
+         if (res.error || !res.contents) {
+            console.error("Fav update failed:", res);
+            return;
          }
-         
-         const data = await res;
-         const nextLikes = typeof data?.contents?.stars === "number" ? data.contents.stars : null;
+
+         const nextLikes = res.contents.stars || 0;
 
          setResults((prev) => {
             const updated = prev.map((item) =>
                item.contents_id === contentsId
-                  ? { ...item, likes: nextLikes ?? item.likes + (isIncrement === "true" ? 1 : -1) }
+                  ? { ...item, likes: nextLikes }
                   : item
             );
             return applySort(updated, sortOption);
