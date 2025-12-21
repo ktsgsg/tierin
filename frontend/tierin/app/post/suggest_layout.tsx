@@ -62,6 +62,14 @@ export function SubjectTeacherContainer() {
     return () => clearTimeout(timer);
   }, [selectedSubject, selectedTeacher]);
 
+  // フォームリセット用の関数
+  const reset = () => {
+    setSelectedSubject("");
+    setSelectedTeacher("");
+    setSubjectResults([]);
+    setSelectedCode("");
+  };
+
   return {
     SubjectInputs: (
       <>
@@ -120,7 +128,8 @@ export function SubjectTeacherContainer() {
           <div className={styles.emptyText}>科目名または先生を入力してください</div>
         )}
       </>
-    )
+    ),
+    reset
   };
 }
 

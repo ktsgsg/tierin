@@ -26,6 +26,7 @@ export function PreviewContent({ data }: PreviewContentProps) {
          {data.metadata.resources.map((resource: string, index: number) => {
             const resourceUrl = resourceBase + resource;
             const filename = filenames && filenames[index] ? filenames[index] : resource;
+            const lowerResource = resource.toLowerCase();
 
             return (
                <div key={resource} className={styles.resource_card}>
@@ -41,9 +42,9 @@ export function PreviewContent({ data }: PreviewContentProps) {
                      </a>
                   </div>
                   <div className={styles.resource_content}>
-                     {resource.endsWith('.jpeg') || resource.endsWith('.jpg') || resource.endsWith('.png') ? (
+                     {lowerResource.endsWith('.jpeg') || lowerResource.endsWith('.jpg') || lowerResource.endsWith('.png') || lowerResource.endsWith('.gif') || lowerResource.endsWith('.webp') ? (
                         <img src={resourceUrl} alt={filename} />
-                     ) : resource.endsWith('.pdf') ? (
+                     ) : lowerResource.endsWith('.pdf') ? (
                         <div className={styles.pdf_container}>
                            <iframe
                               src={resourceUrl}
