@@ -31,8 +31,8 @@ export function PreviewContent({ data }: PreviewContentProps) {
                <div key={resource} className={styles.resource_card}>
                   <div className={styles.card_header}>
                      <div className={styles.filename}>{filename}</div>
-                     <a 
-                        href={resourceUrl} 
+                     <a
+                        href={resourceUrl}
                         download={filename}
                         className={styles.download_button}
                         title="ダウンロード"
