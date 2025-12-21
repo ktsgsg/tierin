@@ -9,8 +9,11 @@ export default function PostingTestPage() {
   // GoogleClassroom風に「ファイルを追加」→選択済みのファイル名表示を実装
   const [files, setFiles] = useState<File[]>([]);
   const [statusMsg, setStatusMsg] = useState<string | null>(null);
-  const { SubjectInputs, SubjectList, reset: resetSubject } = SubjectTeacherContainer();
+  const { SubjectInputs, SubjectList, reset: resetSubject, selectedCode } = SubjectTeacherContainer();
   const formRef = useRef<HTMLFormElement>(null);
+
+  // 投稿ボタンの有効/無効状態
+  const canSubmit = files.length > 0 && selectedCode !== '';
 
   function handleAddFiles(e: React.ChangeEvent<HTMLInputElement>) {
     const selected = e.target.files;
@@ -36,6 +39,17 @@ export default function PostingTestPage() {
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+
+    // バリデーション
+    if (files.length === 0) {
+      setStatusMsg("ファイルを1つ以上選択してください。");
+      return;
+    }
+    if (!selectedCode) {
+      setStatusMsg("該当授業を選択してください。");
+      return;
+    }
+
     setStatusMsg("送信中…");
 
     const form = new FormData(e.currentTarget);
@@ -224,7 +238,26 @@ export default function PostingTestPage() {
             </div>
 
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '12px', marginTop: '8px' }}>
-              <button type="submit" className="auth-button">投稿</button>
+              <button
+                type="submit"
+                className="auth-button"
+                disabled={!canSubmit}
+                style={{
+                  opacity: canSubmit ? 1 : 0.5,
+                  cursor: canSubmit ? 'pointer' : 'not-allowed'
+                }}
+              >
+                投稿
+              </button>
+              {!canSubmit && (
+                <div style={{ fontSize: '0.85rem', color: '#999999' }}>
+                  {files.length === 0 && selectedCode === ''
+                    ? 'ファイルを追加し、該当授業を選択してください'
+                    : files.length === 0
+                      ? 'ファイルを1つ以上追加してください'
+                      : '該当授業を選択してください'}
+                </div>
+              )}
               {statusMsg && (
                 <div style={{
                   fontSize: '0.9rem',

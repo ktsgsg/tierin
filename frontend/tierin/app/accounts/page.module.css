@@ -130,3 +130,23 @@
 .deleteButton:active {
    transform: scale(0.98);
 }
+
+.contactEmail {
+   display: inline-block;
+   color: #56D6E4;
+   font-size: 0.95rem;
+   font-weight: 600;
+   text-decoration: underline;
+   transition: color 0.2s ease;
+}
+
+.contactEmail:hover {
+   color: #36b8c6;
+}
+
+.futureNote {
+   margin-top: 16px;
+   font-size: 0.85rem;
+   color: #888888;
+   font-style: italic;
+}

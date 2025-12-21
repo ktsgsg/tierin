@@ -129,7 +129,8 @@ export function SubjectTeacherContainer() {
         )}
       </>
     ),
-    reset
+    reset,
+    selectedCode
   };
 }
 
