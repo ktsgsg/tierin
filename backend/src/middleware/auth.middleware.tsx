@@ -61,11 +61,26 @@ export const supabaseMiddleware = (): MiddlewareHandler => {
          cookies: {
             // Cookie ヘッダーから認証トークンを読み込む
             getAll() {
-               return parseCookieHeader(c.req.header('Cookie') ?? '')
+               const cookies = parseCookieHeader(c.req.header('Cookie') ?? '')
+               // value が undefined の場合は空文字列に変換
+               return cookies.map(cookie => ({
+                  name: cookie.name,
+                  value: cookie.value ?? ''
+               }))
             },
             // レスポンスに新しいトークンを Cookie として設定
             setAll(cookiesToSet) {
-               cookiesToSet.forEach(({ name, value, options }) => setCookie(c, name, value, options))
+               cookiesToSet.forEach(({ name, value, options }) => {
+                  // sameSite の型を Hono の CookieOptions に合わせる
+                  const sameSite = options?.sameSite === true ? 'Strict'
+                     : options?.sameSite === false ? undefined
+                        : options?.sameSite as 'Strict' | 'Lax' | 'None' | undefined
+
+                  setCookie(c, name, value, {
+                     ...options,
+                     sameSite,
+                  })
+               })
             },
          },
       })
@@ -90,7 +105,6 @@ export const supabaseMiddleware = (): MiddlewareHandler => {
             console.error('Error getting user:', error.message);
             return c.json({ error: 'Unauthorized' }, 401);
          }
-         c.set('email', data.user.email);
          await next();
       } else {
          if (refresh_token) {

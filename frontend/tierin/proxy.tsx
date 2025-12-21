@@ -52,6 +52,15 @@ export async function proxy(request: NextRequest) {
       }
    });
    const supabaseData = await supabaseResponse.json();
+   //console.log('Middleware access_token:', access_token);
+   //console.log('Middleware supabase session data:', supabaseData);
+   // ユーザー情報が取得できない場合はログインページへリダイレクト
+   if (!supabaseData?.user?.email) {
+      const url = request.nextUrl.clone();
+      url.pathname = '/login';
+      return NextResponse.redirect(url);
+   }
+
    // ユーザーメールアドレスをリクエストヘッダーに追加
    const requestHeaders = new Headers(request.headers);
    requestHeaders.set('X-User-Email', supabaseData.user.email);

@@ -92,7 +92,7 @@ export async function getAccountData(): Promise<AccountData | null> {
    const mine = mineResults.filter((item): item is SearchItem => item !== null);
 
    const accountData: AccountData = {
-      email: data.user.email ?? '',
+      email: data?.user?.email ?? '',
       myResources: mine,
       likedResources: liked,
    };
