@@ -6,6 +6,7 @@ import Link from 'next/link';
 // CSS Modulesをインポート
 import styles from './Header.module.css';
 import { GetEmailHeader } from './headerAction';
+import { logoutAction } from './logoutAction';
 
 interface NavItem {
     name: string;
@@ -16,6 +17,7 @@ const navItems: NavItem[] = [
     { name: 'ホーム', href: '/' },
     { name: '詳細検索', href: '/search' },
     { name: '投稿', href: '/post' },
+    { name: 'アカウント', href: '/accounts' },
     { name: 'FAQ', href: '/faq' },
 ];
 
@@ -48,18 +50,30 @@ export const Header = ({ userEmail = "ユーザー" }: HeaderProps) => {
         }
     };
 
+    const handleLogout = async () => {
+        await logoutAction();
+        router.push('/login');
+    };
+
     return (
         // ナビゲーションバー全体にクラスを適用
         <header className={styles.headerContainer}>
             <div className={styles.headerTop}>
                 <div className={styles.logoArea}>
                     <div className={styles.logo}>
-                        🔗 Tierin
+                        <img src="/favicon.ico" alt="Tierin" className={styles.logoIcon} />
+                        Tierin
                     </div>
                     <div className={styles.user_id}>
                         {email} ログイン中
                     </div>
                 </div>
+                <button
+                    onClick={handleLogout}
+                    className={styles.logoutButton}
+                >
+                    ログアウト
+                </button>
             </div>
             <div className={styles.headerBottom}>
                 <div className={styles.navContainer}>

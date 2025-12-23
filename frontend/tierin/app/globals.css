@@ -26,7 +26,25 @@ body {
   padding-top: 110px;
 }
 
-/* Auth pages shared styles */
+/* Responsive base styles */
+@media (max-width: 768px) {
+  body {
+    padding-top: 160px;
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    padding-top: 180px;
+  }
+}
+
+/* Pages with header need padding to account for fixed header */
+.with-header {
+  padding-top: 0;
+}
+
+/* Auth pages remove header padding */
 .auth-page {
   min-height: 100vh;
   display: flex;
@@ -34,6 +52,8 @@ body {
   justify-content: center;
   background: linear-gradient(135deg, #e8ecf1 0%, #f5f5f5 100%);
   padding: 24px;
+  padding-top: 24px;
+  margin-top: -110px;
 }
 
 .auth-card {
@@ -44,6 +64,25 @@ body {
   border-radius: 8px;
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
   border: 1px solid #e0e0e0;
+  margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+  .auth-card {
+    padding: 20px;
+    margin: 0 12px;
+  }
+
+  .auth-page {
+    padding: 16px;
+    margin-top: -160px;
+  }
+}
+
+@media (max-width: 480px) {
+  .auth-page {
+    margin-top: -180px;
+  }
 }
 
 .auth-title {

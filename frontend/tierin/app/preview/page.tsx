@@ -1,6 +1,12 @@
-import styles from './page.module.css'
-import { cookies } from 'next/headers';
+import type { Metadata } from 'next';
 import { Header } from "@/app/components/Header";
+import { getPreviewData } from './previewAction';
+import { PreviewContent } from './PreviewContent';
+import { PreviewError } from './PreviewError';
+
+export const metadata: Metadata = {
+    title: "プレビュー",
+};
 
 export default async function PreviewPage(props: any) {
     const searchParams = await props.searchParams;
@@ -10,58 +16,32 @@ export default async function PreviewPage(props: any) {
         return <p>contents_id is required</p>;
     }
 
-    // 認証用のCookieを取得
-    const cookieStore = await cookies()
-    const cookie = cookieStore.get('access_token') ? `access_token=${cookieStore.get('access_token')?.value}; refresh_token=${cookieStore.get('refresh_token')?.value}` : '';
+    // サーバー側でデータを取得
+    const data = await getPreviewData(contents_id);
 
-    const response = await fetch(
-        `http://api:3000/api/preview/contents?contents_id=${contents_id}`,
-        {
-            cache: 'no-store',
-            //cookieが必要なので追記
-            headers: {
-                'Cookie': cookie,
-            },
-        }
-    )
-    const data = await response.json();
-    const resourceBase = '/storage/resources/';
+    if (!data) {
+        return (
+            <div className="with-header" style={{ paddingBottom: 48, paddingTop: 32, background: "#f5f5f5", minHeight: "100vh" }}>
+                <Header />
+                <main style={{ width: '100%', maxWidth: '1200px', margin: '0 auto', padding: '0 24px' }}>
+                    <div className="auth-card">
+                        <PreviewError />
+                    </div>
+                </main>
+            </div>
+        );
+    }
 
     return (
-        <div>
+        <div className="with-header" style={{ paddingBottom: 48, paddingTop: 32, background: "#f5f5f5", minHeight: "100vh" }}>
             <Header />
-            <ul className={styles.resource_list}>
-                {
-                    data.metadata.resources.map((resource: string) => {
-                        const resourceUrl = resourceBase + resource;
-                        if (resource.endsWith('.jpeg') || resource.endsWith('.jpg') || resource.endsWith('.png')) {
-                            return (
-                                <li key={resource} className={styles.resource_item}>
-                                    <img src={resourceUrl} alt={`Resource`} />
-                                </li>
-                            );
-                        } else if (resource.endsWith('.pdf')) {
-                            return (
-                                <li key={resource} className={styles.resource_item}>
-                                    <div className={styles.pdf_container}>
-                                        <iframe
-                                            src={resourceUrl}
-                                            title="PDF Resource"
-                                        ></iframe>
-                                    </div>
-                                </li>
-                            );
-                        } else {
-                            return (
-                                <li key={resource} className={styles.resource_item}>
-                                    <a href={resourceUrl} target="_blank" rel="noopener noreferrer">
-                                        Download Resource
-                                    </a>
-                                </li>
-                            );
-                        }
-                    })}
-            </ul>
+            <main style={{ width: '100%', maxWidth: '1200px', margin: '0 auto', padding: '0 24px' }}>
+                <div className="auth-card">
+                    <h1 className="auth-title">プレビュー</h1>
+                    {/* クライアント側でレンダリング */}
+                    <PreviewContent data={data} />
+                </div>
+            </main>
         </div>
-    )
+    );
 }

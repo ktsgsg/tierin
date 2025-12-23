@@ -1,6 +1,7 @@
 import { serve } from '@hono/node-server'
 import { Hono } from 'hono'
 import { logger } from 'hono/logger'
+import { bodyLimit } from 'hono/body-limit'
 
 import { about } from './about/page.js'
 import { search } from './api/search.js'
@@ -8,6 +9,7 @@ import { posting } from './api/posting.js'
 import { suggest } from './api/suggest.js'
 import { preview } from './api/preview.js'
 import { fav } from './api/fav.js'
+import { accounts } from './api/accounts.js'
 
 import path from 'path'
 import fs from 'fs'
@@ -22,6 +24,14 @@ import { supabaseMiddleware } from './middleware/auth.middleware.js';
 const app = new Hono();
 
 app.use(logger());
+
+// ボディサイズ制限を100MBに設定
+app.use('/api/posting/*', bodyLimit({
+  maxSize: 100 * 1024 * 1024, // 100MB
+  onError: (c) => {
+    return c.json({ error: 'ファイルサイズが大きすぎます。100MB以下にしてください。' }, 413);
+  }
+}));
 
 //ログインしているかどうかを判断するミドルウェア
 app.use('/api/*', supabaseMiddleware());
@@ -94,6 +104,7 @@ app.route('/api/signup/', signup);
 app.route('/api/signin/', signin);
 app.route('/api/getsession/', getsession);
 app.route('/api/fav', fav);
+app.route('/api/accounts/', accounts);
 
 serve({
   fetch: app.fetch,

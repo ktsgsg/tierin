@@ -25,6 +25,7 @@ services:
         ipv4_address: 172.30.0.3 # コンテナのIPアドレスを固定
     volumes:
       - ./frontend/tierin:/app
+    #tunnelは削除
 
 networks:
   app-network:

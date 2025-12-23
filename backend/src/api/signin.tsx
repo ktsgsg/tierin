@@ -22,6 +22,8 @@ signin.post('/', async (c) => {
    if (error) {
       return c.json({ error: error.message }, 400);
    }
+   setCookie(c, 'access_token', data.session.access_token);
+   setCookie(c, 'refresh_token', data.session.refresh_token);
    return c.json(data.session);
 });
 

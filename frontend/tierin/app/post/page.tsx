@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Header } from '@/app/components/Header';
 import { postAction } from './postAction';
 import { SubjectTeacherContainer } from "./suggest_layout";
@@ -9,7 +9,11 @@ export default function PostingTestPage() {
   // GoogleClassroom風に「ファイルを追加」→選択済みのファイル名表示を実装
   const [files, setFiles] = useState<File[]>([]);
   const [statusMsg, setStatusMsg] = useState<string | null>(null);
-  const { SubjectInputs, SubjectList } = SubjectTeacherContainer();
+  const { SubjectInputs, SubjectList, reset: resetSubject, selectedCode } = SubjectTeacherContainer();
+  const formRef = useRef<HTMLFormElement>(null);
+
+  // 投稿ボタンの有効/無効状態
+  const canSubmit = files.length > 0 && selectedCode !== '';
 
   function handleAddFiles(e: React.ChangeEvent<HTMLInputElement>) {
     const selected = e.target.files;
@@ -35,6 +39,17 @@ export default function PostingTestPage() {
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+
+    // バリデーション
+    if (files.length === 0) {
+      setStatusMsg("ファイルを1つ以上選択してください。");
+      return;
+    }
+    if (!selectedCode) {
+      setStatusMsg("該当授業を選択してください。");
+      return;
+    }
+
     setStatusMsg("送信中…");
 
     const form = new FormData(e.currentTarget);
@@ -42,7 +57,17 @@ export default function PostingTestPage() {
 
     try {
       const result = await postAction(form);
-      setStatusMsg("アップロード成功");
+
+      if (result.success) {
+        setStatusMsg("アップロード成功");
+        // フォームをリセット
+        formRef.current?.reset();
+        setFiles([]);
+        resetSubject();
+      } else {
+        // エラーメッセージを表示
+        setStatusMsg(result.error || 'アップロードに失敗しました。');
+      }
     } catch (err) {
       console.error(err);
       setStatusMsg("アップロードに失敗しました。コンソールを確認してください。");
@@ -50,7 +75,7 @@ export default function PostingTestPage() {
   }
 
   return (
-    <div className="with-header" style={{ paddingTop: 32, paddingBottom: 48, background: "#f5f5f5" }}>
+    <div className="with-header" style={{ paddingBottom: 48, background: "#f5f5f5" }}>
       <Header />
       <main style={{ width: '100%', maxWidth: '1200px', margin: '0 auto', padding: '0 24px' }}>
         <div className="auth-card">
@@ -61,6 +86,7 @@ export default function PostingTestPage() {
           </p>
 
           <form
+            ref={formRef}
             method="post"
             action="/posting"
             encType="multipart/form-data"
@@ -148,7 +174,17 @@ export default function PostingTestPage() {
                   <span>ファイルを追加</span>
                 </label>
 
-                <div style={{ fontSize: '0.85rem', color: '#999999' }}>選択済み: {files.length} 個</div>
+                <div style={{ display: 'flex', gap: '16px', fontSize: '0.85rem', color: '#999999' }}>
+                  <span>選択済み: {files.length} 個</span>
+                  {files.length > 0 && (
+                    <span style={{
+                      color: files.reduce((acc, f) => acc + f.size, 0) > 100 * 1024 * 1024 ? '#dc3545' : '#666666',
+                      fontWeight: files.reduce((acc, f) => acc + f.size, 0) > 100 * 1024 * 1024 ? '600' : '400'
+                    }}>
+                      合計: {(files.reduce((acc, f) => acc + f.size, 0) / 1024 / 1024).toFixed(1)} MB / 100 MB
+                    </span>
+                  )}
+                </div>
               </div>
 
               {files.length > 0 && (
@@ -202,8 +238,41 @@ export default function PostingTestPage() {
             </div>
 
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '12px', marginTop: '8px' }}>
-              <button type="submit" className="auth-button">投稿</button>
-              {statusMsg && <div style={{ fontSize: '0.9rem', color: '#666666' }}>{statusMsg}</div>}
+              <button
+                type="submit"
+                className="auth-button"
+                disabled={!canSubmit}
+                style={{
+                  opacity: canSubmit ? 1 : 0.5,
+                  cursor: canSubmit ? 'pointer' : 'not-allowed'
+                }}
+              >
+                投稿
+              </button>
+              {!canSubmit && (
+                <div style={{ fontSize: '0.85rem', color: '#999999' }}>
+                  {files.length === 0 && selectedCode === ''
+                    ? 'ファイルを追加し、該当授業を選択してください'
+                    : files.length === 0
+                      ? 'ファイルを1つ以上追加してください'
+                      : '該当授業を選択してください'}
+                </div>
+              )}
+              {statusMsg && (
+                <div style={{
+                  fontSize: '0.9rem',
+                  color: statusMsg === 'アップロード成功' ? '#28a745' :
+                    statusMsg === '送信中…' ? '#666666' : '#dc3545',
+                  padding: '8px 16px',
+                  borderRadius: '6px',
+                  background: statusMsg === 'アップロード成功' ? '#d4edda' :
+                    statusMsg === '送信中…' ? '#f5f5f5' : '#f8d7da',
+                  textAlign: 'center',
+                  maxWidth: '100%'
+                }}>
+                  {statusMsg}
+                </div>
+              )}
             </div>
           </form>
         </div>
