@@ -1,7 +1,12 @@
+import type { Metadata } from 'next';
 import { Header } from "@/app/components/Header";
 import { getPreviewData } from './previewAction';
 import { PreviewContent } from './PreviewContent';
 import { PreviewError } from './PreviewError';
+
+export const metadata: Metadata = {
+    title: "プレビュー",
+};
 
 export default async function PreviewPage(props: any) {
     const searchParams = await props.searchParams;

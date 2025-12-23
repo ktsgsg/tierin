@@ -150,3 +150,48 @@
    color: #888888;
    font-style: italic;
 }
+
+/* Responsive styles */
+@media (max-width: 768px) {
+   .accountSection {
+      margin-bottom: 24px;
+      padding-bottom: 20px;
+   }
+
+   .emailDisplay {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+      padding: 12px;
+   }
+
+   .resourceHeader {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+   }
+
+   .resourceMeta {
+      flex-wrap: wrap;
+      gap: 8px;
+   }
+
+   .resourceCard {
+      padding: 12px;
+   }
+}
+
+@media (max-width: 480px) {
+   .sectionTitle {
+      font-size: 1rem;
+   }
+
+   .emailText {
+      font-size: 0.9rem;
+      word-break: break-all;
+   }
+
+   .resourceTitle {
+      font-size: 0.9rem;
+   }
+}

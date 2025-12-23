@@ -10,6 +10,7 @@ import { redirect } from 'next/navigation';
 export async function loginAction(formData: FormData) {
    const email = formData.get('email') as string;
    const password = formData.get('password') as string;
+   const redirectTo = formData.get('redirect') as string || '/';
 
    try {
       // バックエンドAPIにログインリクエストを送信
@@ -51,8 +52,8 @@ export async function loginAction(formData: FormData) {
          error: err instanceof Error ? err.message : 'ネットワークエラーが発生しました',
       };
    }
-   // ログイン成功後にホームページへリダイレクト
-   redirect('/');
+   // ログイン成功後にリダイレクト先へ移動（指定がなければホームへ）
+   redirect(redirectTo);
    return {
       success: true,
    };

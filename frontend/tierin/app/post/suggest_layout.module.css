@@ -66,3 +66,22 @@
    color: #999999;
    font-size: 0.9rem;
 }
+
+/* Responsive styles */
+@media (max-width: 768px) {
+   .subjectListContainer {
+      max-height: 300px;
+   }
+
+   .subjectCard {
+      padding: 10px;
+   }
+
+   .subjectName {
+      font-size: 0.85rem;
+   }
+
+   .subjectTeacher {
+      font-size: 0.8rem;
+   }
+}

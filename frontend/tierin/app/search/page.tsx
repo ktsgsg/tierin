@@ -6,6 +6,7 @@ import { searchAction } from "./searchAction";
 import { Header } from "@/app/components/Header";
 import { SearchItem } from "./types";
 import { SearchResultList } from "./SearchResultList";
+import styles from "./search.module.css";
 
 type SortOption = "likes" | "aiueo";
 
@@ -39,6 +40,8 @@ function SearchPageContent() {
    // 検索結果の状態管理
    const [results, setResults] = useState<SearchItem[]>(previewResults);
    const [sortOption, setSortOption] = useState<SortOption>("likes");
+   // モバイル用の検索フォーム表示状態
+   const [isFilterOpen, setIsFilterOpen] = useState(false);
 
    const applySort = (items: SearchItem[], sort: SortOption) => {
       const sorted = [...items];
@@ -97,6 +100,8 @@ function SearchPageContent() {
          }
       });
       runSearch(cloned);
+      // モバイルで検索実行後にフィルターを閉じる
+      setIsFilterOpen(false);
    };
 
    /**
@@ -126,10 +131,29 @@ function SearchPageContent() {
       <>
          <Header />
          <div style={{ paddingTop: 32, paddingBottom: 48, background: "#f5f5f5" }}>
+            {/* モバイル用のフィルタートグルボタン */}
+            <button
+               className={styles.filterToggle}
+               onClick={() => setIsFilterOpen(!isFilterOpen)}
+               aria-expanded={isFilterOpen}
+            >
+               <span className={styles.filterToggleIcon}>{isFilterOpen ? "✕" : "☰"}</span>
+               {isFilterOpen ? "検索条件を閉じる" : "検索条件を開く"}
+            </button>
+
             <div style={{ display: "flex", gap: "32px", maxWidth: "100%", margin: "0 auto", padding: "0 24px" }}>
                {/* 左側: 検索フォーム */}
-               <div style={{ flex: "0 0 220px", position: "sticky", top: "120px", alignSelf: "flex-start" }}>
-                  <div style={{ background: "#ffffff", padding: "24px", borderRadius: "8px", border: "1px solid #e0e0e0", boxShadow: "0 2px 8px rgba(0, 0, 0, 0.05)" }}>
+               <div className={`${styles.searchSidebar} ${isFilterOpen ? styles.sidebarOpen : ""}`}>
+                  <div style={{ background: "#ffffff", padding: "24px", borderRadius: "8px", border: "1px solid #e0e0e0", boxShadow: "0 2px 8px rgba(0, 0, 0, 0.05)", position: "relative" }}>
+                     {/* モバイル用閉じるボタン */}
+                     <button
+                        type="button"
+                        className={styles.closeButton}
+                        onClick={() => setIsFilterOpen(false)}
+                        aria-label="検索条件を閉じる"
+                     >
+                        ✕
+                     </button>
                      <h2 style={{ fontSize: "1.1rem", fontWeight: "700", color: "#1a1a1a", marginBottom: "16px", marginTop: 0 }}>
                         検索条件
                      </h2>
@@ -234,7 +258,7 @@ function SearchPageContent() {
                </div>
 
                {/* 右側: 検索結果 */}
-               <div style={{ flex: 1, minWidth: 0 }}>
+               <div className={styles.searchResults}>
                   <h2 style={{ fontSize: "1.1rem", fontWeight: "700", color: "#1a1a1a", marginBottom: "16px", marginTop: 0 }}>
                      {results.length > 0 ? `検索結果（${results.length}件）` : "検索結果"}
                   </h2>

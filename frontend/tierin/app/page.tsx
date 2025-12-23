@@ -1,6 +1,11 @@
 import React from 'react';
+import type { Metadata } from 'next';
 import { Header } from '@/app/components/Header';
 import styles from './page.module.css';
+
+export const metadata: Metadata = {
+  title: "ホーム",
+};
 
 export default function Home() {
   return (
