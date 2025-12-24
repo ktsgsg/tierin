@@ -23,20 +23,17 @@ export async function proxy(request: NextRequest) {
    //cookieを更新
    const data = await response.json();
    //console.log('Middleware session data:', data);
-   try {
-      if (data.session.accsess_token) {
-         const cookiesStore = await cookies();
-         cookiesStore.set('access_token', data.session.access_token, {
-            httpOnly: true,
-            expires: new Date(Date.now() + data.session.expires_at),
-         });
-         cookiesStore.set('refresh_token', data.session.refresh_token, {
-            httpOnly: true,
-            expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), // 30日間有効
-         });
-      }
-   } catch (error) {
-      console.log('accsess_token is no need to update.');
+   if (data.session) {
+      const cookiesStore = await cookies();
+      cookiesStore.set('access_token', data.session.access_token, {
+         httpOnly: true,
+         expires: new Date(Date.now() + data.session.expires_at),
+      });
+      cookiesStore.set('refresh_token', data.session.refresh_token, {
+         httpOnly: true,
+         expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), // 30日間有効
+      });
+      console.log('accsess_token updated.');
    }
 
    //メールアドレスを取得

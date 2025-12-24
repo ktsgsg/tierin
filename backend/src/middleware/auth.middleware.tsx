@@ -105,12 +105,12 @@ export const supabaseMiddleware = (): MiddlewareHandler => {
             console.error('Error getting user:', error.message);
             return c.json({ error: 'Unauthorized' }, 401);
          }
+         console.log('User data:', data);
          await next();
       } else {
          if (refresh_token) {
-            console.log("access_token is empty but refreshable.")
             const { data, error } = await supabase.auth.refreshSession({
-               refresh_token
+               refresh_token: refresh_token,
             });
             if (error || !data?.session) {
                return c.json({ error: 'Unauthorized' }, 401);
@@ -122,7 +122,9 @@ export const supabaseMiddleware = (): MiddlewareHandler => {
             });
             setCookie(c, 'refresh_token', newRefresh);
             if (c.req.path === '/api/getsession/') {
-               return c.json(data.session);
+               console.log('session refreshed');
+               console.log('New session data:', data);
+               return c.json(data);
             }
             await next();
          }
