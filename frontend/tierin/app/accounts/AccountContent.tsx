@@ -40,21 +40,24 @@ export default function AccountContent({ data }: AccountContentProps) {
                <SearchResultList items={data.myResources} />
             </div>
 
-            {/* {アカウント削除ボタン
+            {/* 削除依頼案内 */}
             <div className={styles.accountSection}>
-               <h2 className={styles.sectionTitle}>危険な操作</h2>
+               <h2 className={styles.sectionTitle}>アカウント・コンテンツの削除</h2>
                <div className={styles.dangerZone}>
                   <p className={styles.dangerText}>
-                     アカウントを削除すると、すべてのデータが失われます。この操作は取り消せません。
+                     アカウントの削除、または自分が投稿したコンテンツを削除したい場合は、以下のメールアドレスにその旨をお伝えください。
                   </p>
-                  <button
-                     onClick={handleDeleteAccount}
-                     className={styles.deleteButton}
+                  <a
+                     href="mailto:241205181@ccmailg.meijo-u.ac.jp?subject=Tierin 削除依頼"
+                     className={styles.contactEmail}
                   >
-                     アカウントを削除
-                  </button>
+                     241205181@ccmailg.meijo-u.ac.jp
+                  </a>
+                  <p className={styles.futureNote}>
+                     ※ 今後、アプリ内から削除できる機能を追加予定です。
+                  </p>
                </div>
-            </div>} */}
+            </div>
          </div>
       </main>
    );

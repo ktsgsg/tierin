@@ -1,7 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, Suspense } from 'react';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 import { loginAction } from './actions';
 
 /**
@@ -9,9 +10,21 @@ import { loginAction } from './actions';
  * Server Actionを使用してSSRでログイン処理を行う
  */
 export default function LoginPage() {
+   return (
+      <Suspense fallback={<div className="auth-page"><div className="auth-card">読み込み中...</div></div>}>
+         <LoginPageContent />
+      </Suspense>
+   );
+}
+
+function LoginPageContent() {
    // エラーメッセージとローディング状態の管理
    const [error, setError] = useState('');
    const [isLoading, setIsLoading] = useState(false);
+
+   // クエリパラメータからリダイレクト先を取得
+   const searchParams = useSearchParams();
+   const redirectTo = searchParams.get('redirect') || '/';
 
    /**
     * フォーム送信処理
@@ -44,6 +57,9 @@ export default function LoginPage() {
 
             {/* Server Actionを使用したフォーム */}
             <form action={handleSubmit} className="auth-form">
+               {/* リダイレクト先を hidden input で渡す */}
+               <input type="hidden" name="redirect" value={redirectTo} />
+
                {/* メールアドレス入力欄 */}
                <div>
                   <label htmlFor="email" className="auth-label">

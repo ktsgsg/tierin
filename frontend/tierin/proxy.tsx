@@ -15,7 +15,9 @@ export async function proxy(request: NextRequest) {
    //ログインしていなかったらログインページへリダイレクト
    if (response.status === 401) {// 未認証の場合
       const url = request.nextUrl.clone();
+      //本来のアクセス先をクエリパラメータで渡す
       url.pathname = '/login';
+      url.searchParams.set('redirect', request.nextUrl.pathname);
       return NextResponse.redirect(url);
    }
    //cookieを更新

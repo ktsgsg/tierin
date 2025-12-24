@@ -130,3 +130,68 @@
 .deleteButton:active {
    transform: scale(0.98);
 }
+
+.contactEmail {
+   display: inline-block;
+   color: #56D6E4;
+   font-size: 0.95rem;
+   font-weight: 600;
+   text-decoration: underline;
+   transition: color 0.2s ease;
+}
+
+.contactEmail:hover {
+   color: #36b8c6;
+}
+
+.futureNote {
+   margin-top: 16px;
+   font-size: 0.85rem;
+   color: #888888;
+   font-style: italic;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+   .accountSection {
+      margin-bottom: 24px;
+      padding-bottom: 20px;
+   }
+
+   .emailDisplay {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+      padding: 12px;
+   }
+
+   .resourceHeader {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+   }
+
+   .resourceMeta {
+      flex-wrap: wrap;
+      gap: 8px;
+   }
+
+   .resourceCard {
+      padding: 12px;
+   }
+}
+
+@media (max-width: 480px) {
+   .sectionTitle {
+      font-size: 1rem;
+   }
+
+   .emailText {
+      font-size: 0.9rem;
+      word-break: break-all;
+   }
+
+   .resourceTitle {
+      font-size: 0.9rem;
+   }
+}

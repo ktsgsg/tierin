@@ -26,14 +26,25 @@ export function PreviewContent({ data }: PreviewContentProps) {
          {data.metadata.resources.map((resource: string, index: number) => {
             const resourceUrl = resourceBase + resource;
             const filename = filenames && filenames[index] ? filenames[index] : resource;
+            const lowerResource = resource.toLowerCase();
 
             return (
                <div key={resource} className={styles.resource_card}>
-                  <div className={styles.filename}>{filename}</div>
+                  <div className={styles.card_header}>
+                     <div className={styles.filename}>{filename}</div>
+                     <a
+                        href={resourceUrl}
+                        download={filename}
+                        className={styles.download_button}
+                        title="ダウンロード"
+                     >
+                        📥 ダウンロード
+                     </a>
+                  </div>
                   <div className={styles.resource_content}>
-                     {resource.endsWith('.jpeg') || resource.endsWith('.jpg') || resource.endsWith('.png') ? (
+                     {lowerResource.endsWith('.jpeg') || lowerResource.endsWith('.jpg') || lowerResource.endsWith('.png') || lowerResource.endsWith('.gif') || lowerResource.endsWith('.webp') ? (
                         <img src={resourceUrl} alt={filename} />
-                     ) : resource.endsWith('.pdf') ? (
+                     ) : lowerResource.endsWith('.pdf') ? (
                         <div className={styles.pdf_container}>
                            <iframe
                               src={resourceUrl}
@@ -41,9 +52,9 @@ export function PreviewContent({ data }: PreviewContentProps) {
                            ></iframe>
                         </div>
                      ) : (
-                        <a href={resourceUrl} target="_blank" rel="noopener noreferrer" className={styles.download_link}>
-                           📥 {filename}をダウンロード
-                        </a>
+                        <div className={styles.file_icon}>
+                           📄 このファイルはプレビューできません
+                        </div>
                      )}
                   </div>
                </div>

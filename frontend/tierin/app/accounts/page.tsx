@@ -1,6 +1,11 @@
+import type { Metadata } from 'next';
 import { Header } from '@/app/components/Header';
 import { getAccountData } from './accountAction';
 import AccountContent from './AccountContent';
+
+export const metadata: Metadata = {
+   title: "アカウント",
+};
 
 export default async function AccountPage() {
    const data = await getAccountData();
